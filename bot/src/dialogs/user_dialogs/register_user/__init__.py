@@ -1,0 +1,1 @@
+from .dialogs import register_dialog
