@@ -3,6 +3,35 @@ from typing import TypeAlias, Optional, Sequence
 
 from redis.asyncio import Redis
 
+class RedisKeys:
+    def __init__(self, *args: Sequence):
+        self._keys: list = list(args)
+
+    def __getattr__(self, item):
+        return self.__class__(*(self._keys + [item]))
+
+    def __str__(self, id=False):
+        if not id:
+            return ':'.join(self._keys)
+        return '_'.join(self._keys)
+
+
+class UserKeys:
+    settings = RedisKeys('change_data')
+    status = RedisKeys('status')
+
+    class Settings:
+        language = RedisKeys('change_data', 'language')
+        gender = RedisKeys('change_data', 'gender')
+        activity = RedisKeys('change_data', 'activity')
+        weight = RedisKeys('change_data', 'weight')
+        height = RedisKeys('change_data', 'height')
+        age = RedisKeys('change_data', 'age')
+
+    class Calories:
+        current_quantity = RedisKeys('calories', 'current')
+        maximum_quantity = RedisKeys('calories', 'maximum')
+
 
 KeyType: TypeAlias = Optional[str]
 ValueType: TypeAlias = Optional[str | bool | int]
@@ -66,32 +95,3 @@ class UserCache:
         user_key = f'user:{user_id}'
         return await self._r.exists(user_key)
 
-
-class RedisKeys:
-    def __init__(self, *args: Sequence):
-        self._keys: list = list(args)
-
-    def __getattr__(self, item):
-        return self.__class__(*(self._keys + [item]))
-
-    def __str__(self, id=False):
-        if not id:
-            return ':'.join(self._keys)
-        return '_'.join(self._keys)
-
-
-class UserKeys:
-    settings = RedisKeys('settings')
-    status = RedisKeys('status')
-
-    class Settings:
-        language = RedisKeys('settings', 'language')
-        gender = RedisKeys('settings', 'gender')
-        activity = RedisKeys('settings', 'activity')
-        weight = RedisKeys('settings', 'weight')
-        height = RedisKeys('settings', 'height')
-        age = RedisKeys('settings', 'age')
-
-    class Calories:
-        current_quantity = RedisKeys('calories', 'current')
-        maximum_quantity = RedisKeys('calories', 'maximum')

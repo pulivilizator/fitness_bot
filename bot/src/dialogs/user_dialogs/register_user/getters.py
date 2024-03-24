@@ -1,3 +1,4 @@
+import asyncio
 from typing import TYPE_CHECKING, Optional
 
 from aiogram_dialog import DialogManager
@@ -74,8 +75,9 @@ async def get_register_finish(dialog_manager: DialogManager, i18n: TranslatorRun
     dialog_data = dialog_manager.middleware_data.get('aiogd_context').widget_data
     calories = _counting_calories(dialog_data)
     calories_exists = 1 if calories else 0
-    dialog_manager.dialog_data['calories'] = calories if calories else ''
-    user_data = _get_user_data(i18n, dialog_data)
+    dialog_manager.dialog_data['max_calories'] = calories if calories else ''
+    dialog_manager.dialog_data['current_calories'] = '0'
+    user_data = await asyncio.to_thread(_get_user_data, i18n=i18n, data=dialog_data, id=True)
     return {
         'register_finish_message': i18n.register.finish.message(
             sex=user_data['sex'],
@@ -92,9 +94,9 @@ async def get_register_finish(dialog_manager: DialogManager, i18n: TranslatorRun
     }
 
 
-def _get_user_data(i18n: TranslatorRunner, dialog_data: dict):
+def _get_user_data(i18n: TranslatorRunner, data: dict, id=False):
     user_data = {}
-    match dialog_data.get(UserKeys.Settings.gender.__str__(id=True)):
+    match data.get(UserKeys.Settings.gender.__str__(id=id)):
         case Sex.MALE.value:
             user_data['sex'] = i18n.sex.man.button()
         case Sex.FEMALE.value:
@@ -102,16 +104,18 @@ def _get_user_data(i18n: TranslatorRunner, dialog_data: dict):
         case _:
             user_data['sex'] = i18n.defautl.parameter()
 
-    user_data['age'] = dialog_data.get(UserKeys.Settings.age.__str__(id=True)) or i18n.defautl.parameter()
-    user_data['height'] = dialog_data.get(UserKeys.Settings.height.__str__(id=True)) or i18n.defautl.parameter()
-    user_data['weight'] = dialog_data.get(UserKeys.Settings.weight.__str__(id=True)) or i18n.defautl.parameter()
+    user_data['age'] = data.get(UserKeys.Settings.age.__str__(id=id)) or i18n.defautl.parameter()
+    user_data['height'] = data.get(UserKeys.Settings.height.__str__(id=id)) or i18n.defautl.parameter()
+    user_data['weight'] = data.get(UserKeys.Settings.weight.__str__(id=id)) or i18n.defautl.parameter()
+    user_data['max_calories'] = data.get(UserKeys.Calories.maximum_quantity.__str__(id=id)) or i18n.defautl.parameter()
+    user_data['current_calories'] = data.get(UserKeys.Calories.current_quantity.__str__(id=id))
 
-    match dialog_data.get(UserKeys.Settings.language.__str__(id=True)):
+    match data.get(UserKeys.Settings.language.__str__(id=id)):
         case Language.RU.value: user_data['lang'] = i18n.lang.ru()
         case Language.EN.value: user_data['lang'] = i18n.lang.en()
         case _: user_data['lang'] = i18n.defautl.parameter()
 
-    match dialog_data.get(UserKeys.Settings.activity.__str__(id=True)):
+    match data.get(UserKeys.Settings.activity.__str__(id=id)):
         case ActiveLevel.HIGH.value:
             user_data['activity'] = i18n.activity.level.high()
         case ActiveLevel.MEDIUM.value:

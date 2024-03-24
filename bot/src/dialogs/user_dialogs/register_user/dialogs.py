@@ -7,11 +7,11 @@ from aiogram_dialog.widgets.text import Format
 from bot.src.utils import UserKeys
 from bot.src.states import UserRegisterSG
 
-from .getters import get_sexes, get_lang_and_hello, get_active_levels, get_age, get_height, get_weight, \
-    get_register_finish
+from .getters import (get_sexes, get_lang_and_hello, get_active_levels, get_age, get_height, get_weight,
+                      get_register_finish)
 from .filters import weight_check, height_check, age_check
-from .handlers import correct_parameters_handler, error_parameters_handler, change_lang_handler, \
-    register_finish_handler
+from .handlers import (correct_parameters_handler, error_parameters_handler, change_lang_handler,
+                       register_finish_handler)
 
 register_dialog = Dialog(
     Window(
@@ -124,5 +124,5 @@ register_dialog = Dialog(
         Back(Format('{previous}'), id='back_register'),
         getter=get_register_finish,
         state=UserRegisterSG.finish
-    )
+    ),
 )

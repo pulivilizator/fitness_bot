@@ -68,7 +68,8 @@ async def register_finish_handler(callback: CallbackQuery,
         str(UserKeys.Settings.age): new_user_data.get(UserKeys.Settings.age.__str__(id=True)) or '',
         str(UserKeys.Settings.weight): new_user_data.get(UserKeys.Settings.weight.__str__(id=True)) or '',
         str(UserKeys.Settings.height): new_user_data.get(UserKeys.Settings.height.__str__(id=True)) or '',
-        str(UserKeys.Calories.maximum_quantity): dialog_manager.dialog_data.get('calories'),
+        str(UserKeys.Calories.maximum_quantity): dialog_manager.dialog_data.get('max_calories'),
+        str(UserKeys.Calories.current_quantity): dialog_manager.dialog_data.get('current_calories'),
         str(UserKeys.status): UserStatus.USER.value,
     }
 

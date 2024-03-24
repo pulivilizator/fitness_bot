@@ -13,7 +13,10 @@ class TranslatorRunner:
     height: Height
     age: Age
     register: Register
-    menu: Menu
+    main: Main
+    subtract: Subtract
+    plus: Plus
+    change: Change
     next: Next
     previous: Previous
     defautl: Defautl
@@ -89,7 +92,7 @@ class Weight:
 
 class WeightCorrectly:
     @staticmethod
-    def message() -> Literal["""Send your weight(kg)"""]: ...
+    def message() -> Literal["""Send your weight (kg)"""]: ...
 
 
 class WeightErr:
@@ -104,7 +107,7 @@ class Height:
 
 class HeightCorrectly:
     @staticmethod
-    def message() -> Literal["""Send your height(cm)"""]: ...
+    def message() -> Literal["""Send your height (cm)"""]: ...
 
 
 class HeightErr:
@@ -119,7 +122,7 @@ class Age:
 
 class AgeCorrectly:
     @staticmethod
-    def message() -> Literal["""Send your age(d)"""]: ...
+    def message() -> Literal["""Send your age"""]: ...
 
 
 class AgeErr:
@@ -137,10 +140,10 @@ class RegisterFinish:
 
 &lt;b&gt;Your data:&lt;/b&gt;
 Gender: { $sex }
-Age: { $age }
+Age: { $age } y.o.
 Activity level: { $activity }
-Weight: { $weight }
-Height: { $height }
+Weight: { $weight } kg.
+Height: { $height } cm.
 Language: { $lang }
 
 """]: ...
@@ -149,12 +152,45 @@ Language: { $lang }
     def button() -> Literal["""Complete registration"""]: ...
 
 
-class Menu:
-    @staticmethod
-    def message(*, username) -> Literal["""&lt;b&gt;Main menu.&lt;/b&gt;
-Welcome, { $username }
+class Main:
+    menu: MainMenu
 
-  to your stream."""]: ...
+
+class MainMenu:
+    @staticmethod
+    def message(*, username, sex, age, activity, weight, height, lang, calories, current_calories, calories) -> Literal["""&lt;b&gt;Main menu.&lt;/b&gt;
+&lt;b&gt;Welcome, { $username }!&lt;/b&gt;
+
+&lt;b&gt;Your data:&lt;/b&gt;
+&lt;i&gt;Gender:&lt;/i&gt; { $sex }
+&lt;i&gt;Age:&lt;/i&gt; { $age } y.o.
+&lt;i&gt;Activity level:&lt;/i&gt; { $activity }
+&lt;i&gt;Weight:&lt;/i&gt; { $weight } kg.
+&lt;i&gt;Height:&lt;/i&gt; { $height } cm.
+&lt;i&gt;Language:&lt;/i&gt; { $lang }
+
+&lt;b&gt;Daily calorie limit: { $calories } kcal.&lt;/b&gt;
+
+&lt;b&gt;Received today { $current_calories } out of { $calories } kcal.&lt;/b&gt;"""]: ...
+
+
+class Subtract:
+    @staticmethod
+    def calories() -> Literal["""Subtract calories"""]: ...
+
+
+class Plus:
+    @staticmethod
+    def calories() -> Literal["""Add calories"""]: ...
+
+
+class Change:
+    data: ChangeData
+
+
+class ChangeData:
+    @staticmethod
+    def button() -> Literal["""Change the data"""]: ...
 
 
 class Next:
@@ -169,5 +205,5 @@ class Previous:
 
 class Defautl:
     @staticmethod
-    def parameter() -> Literal["""Undefined"""]: ...
+    def parameter() -> Literal["""&lt;i&gt;Undefined&lt;/i&gt;"""]: ...
 

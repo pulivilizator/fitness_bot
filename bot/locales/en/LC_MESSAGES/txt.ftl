@@ -17,13 +17,13 @@ activity-level-low = 🧎 Low activity
 
 parameters-err-message = Send a text
 
-weight-correctly-message = Send your weight(kg)
+weight-correctly-message = Send your weight (kg)
 weight-err-message = Send the correct weight
 
-height-correctly-message = Send your height(cm)
+height-correctly-message = Send your height (cm)
 height-err-message = Send the correct growth
 
-age-correctly-message = Send your age(d)
+age-correctly-message = Send your age
 age-err-message = Send the correct age
 
 register-finish-message =
@@ -31,34 +31,41 @@ register-finish-message =
 
     <b>Your data:</b>
     Gender: {$sex}
-    Age: {$age}
+    Age: {$age} y.o.
     Activity level: {$activity}
-    Weight: {$weight}
-    Height: {$height}
+    Weight: {$weight} kg.
+    Height: {$height} cm.
     Language: {$lang}
 
     {$calories_exists ->
-        [1] <b>Daily calorie limit: {$calories}</b>
+        [1] <b>Daily calorie limit: {$calories} kcal.</b>
        *[other] <b>The calorie limit could not be calculated, check the specified data.</b>
     }
 
 register-finish-button = Complete registration
 
-menu-message =
+main-menu-message =
     <b>Main menu.</b>
-    Welcome, {$username}
+    <b>Welcome, {$username}!</b>
 
-    {$userGender ->
-        [male] added
-        [female] added
-       *[other] added(a)
-    } {$photoCount ->
-        [one] one photo
-        [few] {$photoCount} new photos
-       *[other] {$photoCount} new photos
-    } to your stream.
+    <b>Your data:</b>
+    <i>Gender:</i> {$sex}
+    <i>Age:</i> {$age} y.o.
+    <i>Activity level:</i> {$activity}
+    <i>Weight:</i> {$weight} kg.
+    <i>Height:</i> {$height} cm.
+    <i>Language:</i> {$lang}
+
+    <b>Daily calorie limit: {$calories} kcal.</b>
+
+    <b>Received today {$current_calories} out of {$calories} kcal.</b>
+
+subtract-calories = Subtract calories
+plus-calories = Add calories
+
+change-data-button = Change the data
 
 next-button = Next
 previous-button = Back
 
-defautl-parameter = Undefined
+defautl-parameter = <i>Undefined</i>
