@@ -48,7 +48,7 @@ register-finish-message =
 register-finish-button = Завершить регистрацию
 
 main-menu-message =
-    <b>Главное меню.</b>
+    <b>Главное меню.</b>                                           {$lang}
     <b>Добро пожаловать, {$username}!</b>
 
     <b>Ваши данные:</b>
@@ -61,11 +61,11 @@ main-menu-message =
     <i>Уровень активности:</i> {$activity}
     <i>Вес:</i> {$weight} кг.
     <i>Рост:</i> {$height} см.
-    <i>Язык:</i> {$lang}
 
     <b>Дневной лимит калорий: {$calories} ккал.</b>
 
     <b>Получено сегодня {$current_calories} из {$calories} ккал.</b>
+    <b>{$lang}</b>
 
 subtract-calories = Вычесть калории
 plus-calories = Прибавить калории

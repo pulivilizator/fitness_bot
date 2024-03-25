@@ -11,7 +11,7 @@ from .getters import (get_sexes, get_lang_and_hello, get_active_levels, get_age,
                       get_register_finish)
 from .filters import weight_check, height_check, age_check
 from .handlers import (correct_parameters_handler, error_parameters_handler, change_lang_handler,
-                       register_finish_handler)
+                       register_finish_handler, set_user_language)
 
 register_dialog = Dialog(
     Window(
@@ -21,15 +21,15 @@ register_dialog = Dialog(
             Radio(
                 checked_text=Format('🔘 {item[1]}'),
                 unchecked_text=Format('⚪️ {item[1]}'),
-                id=UserKeys.Settings.language.__str__(id=True),
+                id=UserKeys.UserData.language(key_to_id=True),
                 item_id_getter=lambda x: x[0],
                 on_state_changed=change_lang_handler,
                 on_click=change_lang_handler,
-                items='languages'
+                items='languages',
             ),
         ),
         state=UserRegisterSG.start,
-        getter=get_lang_and_hello
+        getter=get_lang_and_hello,
     ),
     Window(
         Format('{sex_message}'),
@@ -37,7 +37,7 @@ register_dialog = Dialog(
             Radio(
                 checked_text=Format('🔘 {item[1]}'),
                 unchecked_text=Format('⚪️ {item[1]}'),
-                id=UserKeys.Settings.gender.__str__(id=True),
+                id=UserKeys.UserData.gender(key_to_id=True),
                 item_id_getter=lambda x: x[0],
                 items='sexes',
             ),
@@ -53,7 +53,7 @@ register_dialog = Dialog(
             Radio(
                 checked_text=Format('🔘 {item[1]}'),
                 unchecked_text=Format('⚪️ {item[1]}'),
-                id=UserKeys.Settings.activity.__str__(id=True),
+                id=UserKeys.UserData.activity(key_to_id=True),
                 item_id_getter=lambda x: x[0],
                 items='active_levels',
             ),
@@ -66,7 +66,7 @@ register_dialog = Dialog(
     Window(
         Format('{weight_message}'),
         TextInput(
-            id=UserKeys.Settings.weight.__str__(id=True),
+            id=UserKeys.UserData.weight(key_to_id=True),
             type_factory=weight_check,
             on_success=correct_parameters_handler,
             on_error=error_parameters_handler
@@ -83,7 +83,7 @@ register_dialog = Dialog(
     Window(
         Format('{height_message}'),
         TextInput(
-            id=UserKeys.Settings.height.__str__(id=True),
+            id=UserKeys.UserData.height(key_to_id=True),
             type_factory=height_check,
             on_success=correct_parameters_handler,
             on_error=error_parameters_handler
@@ -100,7 +100,7 @@ register_dialog = Dialog(
     Window(
         Format('{age_message}'),
         TextInput(
-            id=UserKeys.Settings.age.__str__(id=True),
+            id=UserKeys.UserData.age(key_to_id=True),
             type_factory=age_check,
             on_success=correct_parameters_handler,
             on_error=error_parameters_handler
@@ -125,4 +125,5 @@ register_dialog = Dialog(
         getter=get_register_finish,
         state=UserRegisterSG.finish
     ),
+    on_start=set_user_language
 )

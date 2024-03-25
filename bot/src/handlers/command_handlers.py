@@ -11,7 +11,7 @@ commands_router = Router()
 
 @commands_router.message(CommandStart())
 async def process_start(message: Message, dialog_manager: DialogManager, cache: UserCache):
-    status = await cache.get_value(user_id=message.from_user.id, key=str(UserKeys.status))
+    status = await cache.get_value(user_id=message.from_user.id, key=UserKeys.status())
     await message.delete()
     if status == UserStatus.NEW.value:
         await dialog_manager.start(state=UserRegisterSG.start, mode=StartMode.RESET_STACK)

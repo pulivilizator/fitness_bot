@@ -29,7 +29,7 @@ class TranslatorRunnerMiddleware(BaseMiddleware):
 
     @staticmethod
     async def _get_lang(event: TelegramObject, user: User, cache: UserCache) -> str:
-        if event.callback_query and str(UserKeys.Settings.language.__str__(id=True)) in event.callback_query.data:
+        if event.callback_query and UserKeys.UserData.language(key_to_id=True) in event.callback_query.data:
             return event.callback_query.data.split(':')[1]
 
-        return await cache.get_value(user.id, str(UserKeys.Settings.language))
+        return await cache.get_value(user.id, UserKeys.UserData.language())

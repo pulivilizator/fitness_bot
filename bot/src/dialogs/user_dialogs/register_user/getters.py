@@ -1,10 +1,12 @@
 import asyncio
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING
 
 from aiogram_dialog import DialogManager
 from fluentogram import TranslatorRunner
 
-from bot.src.utils import Language, ActiveLevel, Sex, UserKeys
+from bot.src.services.calories import counting_calories
+from bot.src.services.user_data_getters import _get_user_data
+from bot.src.utils import Language, ActiveLevel, Sex
 
 if TYPE_CHECKING:
     from bot.locales.stub import TranslatorRunner
@@ -73,11 +75,11 @@ async def get_age(dialog_manager: DialogManager, i18n: TranslatorRunner, **kwarg
 
 async def get_register_finish(dialog_manager: DialogManager, i18n: TranslatorRunner, **kwargs) -> dict[str, str]:
     dialog_data = dialog_manager.middleware_data.get('aiogd_context').widget_data
-    calories = _counting_calories(dialog_data)
+    calories = counting_calories(dialog_data, user_keys_id=True)
     calories_exists = 1 if calories else 0
     dialog_manager.dialog_data['max_calories'] = calories if calories else ''
     dialog_manager.dialog_data['current_calories'] = '0'
-    user_data = await asyncio.to_thread(_get_user_data, i18n=i18n, data=dialog_data, id=True)
+    user_data = await asyncio.to_thread(_get_user_data, i18n=i18n, data=dialog_data, user_keys_id=True)
     return {
         'register_finish_message': i18n.register.finish.message(
             sex=user_data['sex'],
@@ -94,62 +96,3 @@ async def get_register_finish(dialog_manager: DialogManager, i18n: TranslatorRun
     }
 
 
-def _get_user_data(i18n: TranslatorRunner, data: dict, id=False):
-    user_data = {}
-    match data.get(UserKeys.Settings.gender.__str__(id=id)):
-        case Sex.MALE.value:
-            user_data['sex'] = i18n.sex.man.button()
-        case Sex.FEMALE.value:
-            user_data['sex'] = i18n.sex.wooman.button()
-        case _:
-            user_data['sex'] = i18n.defautl.parameter()
-
-    user_data['age'] = data.get(UserKeys.Settings.age.__str__(id=id)) or i18n.defautl.parameter()
-    user_data['height'] = data.get(UserKeys.Settings.height.__str__(id=id)) or i18n.defautl.parameter()
-    user_data['weight'] = data.get(UserKeys.Settings.weight.__str__(id=id)) or i18n.defautl.parameter()
-    user_data['max_calories'] = data.get(UserKeys.Calories.maximum_quantity.__str__(id=id)) or i18n.defautl.parameter()
-    user_data['current_calories'] = data.get(UserKeys.Calories.current_quantity.__str__(id=id))
-
-    match data.get(UserKeys.Settings.language.__str__(id=id)):
-        case Language.RU.value: user_data['lang'] = i18n.lang.ru()
-        case Language.EN.value: user_data['lang'] = i18n.lang.en()
-        case _: user_data['lang'] = i18n.defautl.parameter()
-
-    match data.get(UserKeys.Settings.activity.__str__(id=id)):
-        case ActiveLevel.HIGH.value:
-            user_data['activity'] = i18n.activity.level.high()
-        case ActiveLevel.MEDIUM.value:
-            user_data['activity'] = i18n.activity.level.medium()
-        case ActiveLevel.LOW.value:
-            user_data['activity'] = i18n.activity.level.low()
-        case _:
-            user_data['activity'] = i18n.defautl.parameter()
-
-    return user_data
-
-
-def _get_active_multiplier(active: str) -> float:
-    match active:
-        case ActiveLevel.HIGH.value:
-            return 1.5
-        case ActiveLevel.MEDIUM.value:
-            return 1.3
-        case ActiveLevel.LOW.value:
-            return 1.1
-        case _:
-            return 1
-
-
-def _counting_calories(user_data: dict) -> Optional[int]:
-    multiplier = _get_active_multiplier(user_data.get(UserKeys.Settings.activity.__str__(id=True)))
-    try:
-        sex = user_data.get(UserKeys.Settings.gender.__str__(id=True))
-        age = int(user_data.get(UserKeys.Settings.age.__str__(id=True)))
-        height = int(user_data.get(UserKeys.Settings.height.__str__(id=True)))
-        weight = int(user_data.get(UserKeys.Settings.weight.__str__(id=True)))
-    except TypeError:
-        return
-    if sex == Sex.MALE.value:
-        return int(((height * 5) - (age * 6.8) + (weight * 13.7) + 66) * multiplier)
-    elif sex == Sex.FEMALE.value:
-        return int(((height * 1.8) - (age * 4.7) + (weight * 9.6) + 665) * multiplier)

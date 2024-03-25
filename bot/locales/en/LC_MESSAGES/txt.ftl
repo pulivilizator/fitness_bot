@@ -54,11 +54,11 @@ main-menu-message =
     <i>Activity level:</i> {$activity}
     <i>Weight:</i> {$weight} kg.
     <i>Height:</i> {$height} cm.
-    <i>Language:</i> {$lang}
 
     <b>Daily calorie limit: {$calories} kcal.</b>
 
     <b>Received today {$current_calories} out of {$calories} kcal.</b>
+    <b>{$lang}</b>
 
 subtract-calories = Subtract calories
 plus-calories = Add calories

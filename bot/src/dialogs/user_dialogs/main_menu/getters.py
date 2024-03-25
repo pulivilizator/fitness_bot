@@ -7,7 +7,7 @@ from fluentogram import TranslatorRunner
 from typing import TYPE_CHECKING
 
 from bot.src.utils import UserCache, UserKeys
-from ..register_user.getters import _get_user_data
+from bot.src.services.user_data_getters import _get_user_data
 
 if TYPE_CHECKING:
     from bot.locales.stub import TranslatorRunner
