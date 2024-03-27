@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING
 
 from bot.src.dialogs.user_dialogs.register_user.services import create_final_user_data
 from bot.src.states import MainMenuSG
-from bot.src.utils import UserCache, UserKeys
+from bot.src.services import UserCache, UserCacheKeys
 
 if TYPE_CHECKING:
     from bot.locales.stub import TranslatorRunner
@@ -53,7 +53,7 @@ async def change_lang_handler(callback: CallbackQuery,
                               item_id: str):
     cache: UserCache = dialog_manager.middleware_data.get('cache')
 
-    await cache.set_data(user_id=callback.from_user.id, key=UserKeys.UserData.language(), value=item_id)
+    await cache.set_data(user_id=callback.from_user.id, key=UserCacheKeys.Settings.language(), value=item_id)
 
 
 async def register_finish_handler(callback: CallbackQuery,
@@ -69,9 +69,9 @@ async def register_finish_handler(callback: CallbackQuery,
     await dialog_manager.done()
     await dialog_manager.start(state=MainMenuSG.main_menu)
 
+
 async def set_user_language(_, dialog_manager: DialogManager):
     cache: UserCache = dialog_manager.middleware_data.get('cache')
-    lang = await cache.get_value(dialog_manager.event.from_user.id, UserKeys.UserData.language())
-    radio_lang_widget: ManagedRadio = dialog_manager.find(UserKeys.UserData.language(key_to_id=True))
+    lang = await cache.get_value(dialog_manager.event.from_user.id, UserCacheKeys.Settings.language())
+    radio_lang_widget: ManagedRadio = dialog_manager.find(UserCacheKeys.Settings.language(key_to_id=True))
     await radio_lang_widget.set_checked(lang)
-

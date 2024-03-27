@@ -4,7 +4,7 @@ from aiogram_dialog.widgets.input import TextInput, MessageInput
 from aiogram_dialog.widgets.kbd import Next, Button, Radio, Column, Row, Back
 from aiogram_dialog.widgets.text import Format
 
-from bot.src.utils import UserKeys
+from bot.src.services import UserCacheKeys
 from bot.src.states import UserRegisterSG
 
 from .getters import (get_sexes, get_lang_and_hello, get_active_levels, get_age, get_height, get_weight,
@@ -21,10 +21,9 @@ register_dialog = Dialog(
             Radio(
                 checked_text=Format('🔘 {item[1]}'),
                 unchecked_text=Format('⚪️ {item[1]}'),
-                id=UserKeys.UserData.language(key_to_id=True),
+                id=UserCacheKeys.Settings.language(key_to_id=True),
                 item_id_getter=lambda x: x[0],
                 on_state_changed=change_lang_handler,
-                on_click=change_lang_handler,
                 items='languages',
             ),
         ),
@@ -37,7 +36,7 @@ register_dialog = Dialog(
             Radio(
                 checked_text=Format('🔘 {item[1]}'),
                 unchecked_text=Format('⚪️ {item[1]}'),
-                id=UserKeys.UserData.gender(key_to_id=True),
+                id=UserCacheKeys.UserData.gender(key_to_id=True),
                 item_id_getter=lambda x: x[0],
                 items='sexes',
             ),
@@ -53,7 +52,7 @@ register_dialog = Dialog(
             Radio(
                 checked_text=Format('🔘 {item[1]}'),
                 unchecked_text=Format('⚪️ {item[1]}'),
-                id=UserKeys.UserData.activity(key_to_id=True),
+                id=UserCacheKeys.UserData.activity(key_to_id=True),
                 item_id_getter=lambda x: x[0],
                 items='active_levels',
             ),
@@ -66,7 +65,7 @@ register_dialog = Dialog(
     Window(
         Format('{weight_message}'),
         TextInput(
-            id=UserKeys.UserData.weight(key_to_id=True),
+            id=UserCacheKeys.UserData.weight(key_to_id=True),
             type_factory=weight_check,
             on_success=correct_parameters_handler,
             on_error=error_parameters_handler
@@ -83,7 +82,7 @@ register_dialog = Dialog(
     Window(
         Format('{height_message}'),
         TextInput(
-            id=UserKeys.UserData.height(key_to_id=True),
+            id=UserCacheKeys.UserData.height(key_to_id=True),
             type_factory=height_check,
             on_success=correct_parameters_handler,
             on_error=error_parameters_handler
@@ -100,7 +99,7 @@ register_dialog = Dialog(
     Window(
         Format('{age_message}'),
         TextInput(
-            id=UserKeys.UserData.age(key_to_id=True),
+            id=UserCacheKeys.UserData.age(key_to_id=True),
             type_factory=age_check,
             on_success=correct_parameters_handler,
             on_error=error_parameters_handler

@@ -42,7 +42,7 @@ register-finish-message =
        *[other] <b>The calorie limit could not be calculated, check the specified data.</b>
     }
 
-register-finish-button = Complete registration
+register-finish-button = Complete registration ☑️
 
 main-menu-message =
     <b>Main menu.</b>
@@ -60,12 +60,22 @@ main-menu-message =
     <b>Received today {$current_calories} out of {$calories} kcal.</b>
     <b>{$lang}</b>
 
-subtract-calories = Subtract calories
-plus-calories = Add calories
+subtract-calories = ➖ Subtract calories
+plus-calories = ➕ Add calories
 
-change-data-button = Change the data
+change-data-button = 💆 Change the data
+change-data-menu-message = <b>Change the data:</b>
 
-next-button = Next
-previous-button = Back
+change-data-sex-button = 👨🏻 Change the gender 👩🏼
+change-data-sex-message = <b>Choose a gender:</b>
+
+settings-button = 🛠 Settings
+settings-message = <b>Settings:</b>
+
+language-change-button = 🌍 Change the language
+language-change-message = <b>Select a language:</b>
+
+next-button = Next ➡️
+previous-button = ⬅️ Previous
 
 defautl-parameter = <i>Undefined</i>

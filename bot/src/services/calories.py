@@ -1,5 +1,5 @@
 from typing import Optional
-from bot.src.utils import ActiveLevel, Sex, UserKeys
+from bot.src.services import ActiveLevel, Sex, UserCacheKeys
 
 
 def get_active_multiplier(active: str) -> float:
@@ -16,13 +16,13 @@ def get_active_multiplier(active: str) -> float:
 
 def counting_calories(user_data: dict, user_keys_id=False) -> Optional[int]:
     multiplier = get_active_multiplier(
-        user_data.get(UserKeys.UserData.activity(key_to_id=user_keys_id))
+        user_data.get(UserCacheKeys.UserData.activity(key_to_id=user_keys_id))
     )
     try:
-        sex = user_data.get(UserKeys.UserData.gender(key_to_id=user_keys_id))
-        age = int(user_data.get(UserKeys.UserData.age(key_to_id=user_keys_id)))
-        height = int(user_data.get(UserKeys.UserData.height(key_to_id=user_keys_id)))
-        weight = int(user_data.get(UserKeys.UserData.weight(key_to_id=user_keys_id)))
+        sex = user_data.get(UserCacheKeys.UserData.gender(key_to_id=user_keys_id))
+        age = int(user_data.get(UserCacheKeys.UserData.age(key_to_id=user_keys_id)))
+        height = int(user_data.get(UserCacheKeys.UserData.height(key_to_id=user_keys_id)))
+        weight = int(user_data.get(UserCacheKeys.UserData.weight(key_to_id=user_keys_id)))
     except TypeError:
         return
     if sex == Sex.MALE.value:

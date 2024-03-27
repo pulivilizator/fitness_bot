@@ -17,6 +17,8 @@ class TranslatorRunner:
     subtract: Subtract
     plus: Plus
     change: Change
+    settings: Settings
+    language: Language
     next: Next
     previous: Previous
     defautl: Defautl
@@ -158,7 +160,7 @@ class Main:
 
 class MainMenu:
     @staticmethod
-    def message(*, username, sex, age, activity, weight, height, lang, calories, current_calories, calories) -> Literal["""&lt;b&gt;Main menu.&lt;/b&gt;
+    def message(*, username, sex, age, activity, weight, height, calories, current_calories, calories, lang) -> Literal["""&lt;b&gt;Main menu.&lt;/b&gt;
 &lt;b&gt;Welcome, { $username }!&lt;/b&gt;
 
 &lt;b&gt;Your data:&lt;/b&gt;
@@ -167,21 +169,21 @@ class MainMenu:
 &lt;i&gt;Activity level:&lt;/i&gt; { $activity }
 &lt;i&gt;Weight:&lt;/i&gt; { $weight } kg.
 &lt;i&gt;Height:&lt;/i&gt; { $height } cm.
-&lt;i&gt;Language:&lt;/i&gt; { $lang }
 
 &lt;b&gt;Daily calorie limit: { $calories } kcal.&lt;/b&gt;
 
-&lt;b&gt;Received today { $current_calories } out of { $calories } kcal.&lt;/b&gt;"""]: ...
+&lt;b&gt;Received today { $current_calories } out of { $calories } kcal.&lt;/b&gt;
+&lt;b&gt;{ $lang }&lt;/b&gt;"""]: ...
 
 
 class Subtract:
     @staticmethod
-    def calories() -> Literal["""Subtract calories"""]: ...
+    def calories() -> Literal["""➖ Subtract calories"""]: ...
 
 
 class Plus:
     @staticmethod
-    def calories() -> Literal["""Add calories"""]: ...
+    def calories() -> Literal["""➕ Add calories"""]: ...
 
 
 class Change:
@@ -189,18 +191,54 @@ class Change:
 
 
 class ChangeData:
+    menu: ChangeDataMenu
+    sex: ChangeDataSex
+
     @staticmethod
-    def button() -> Literal["""Change the data"""]: ...
+    def button() -> Literal["""💆 Change the data"""]: ...
+
+
+class ChangeDataMenu:
+    @staticmethod
+    def message() -> Literal["""&lt;b&gt;Change the data:&lt;/b&gt;"""]: ...
+
+
+class ChangeDataSex:
+    @staticmethod
+    def button() -> Literal["""👨🏻 Change the gender 👩🏼"""]: ...
+
+    @staticmethod
+    def message() -> Literal["""&lt;b&gt;Choose a gender:&lt;/b&gt;"""]: ...
+
+
+class Settings:
+    @staticmethod
+    def button() -> Literal["""🛠 Settings"""]: ...
+
+    @staticmethod
+    def message() -> Literal["""&lt;b&gt;Settings:&lt;/b&gt;"""]: ...
+
+
+class Language:
+    change: LanguageChange
+
+
+class LanguageChange:
+    @staticmethod
+    def button() -> Literal["""🌍 Change the language"""]: ...
+
+    @staticmethod
+    def message() -> Literal["""&lt;b&gt;Select a language:&lt;/b&gt;"""]: ...
 
 
 class Next:
     @staticmethod
-    def button() -> Literal["""Next"""]: ...
+    def button() -> Literal["""Next ➡️"""]: ...
 
 
 class Previous:
     @staticmethod
-    def button() -> Literal["""Back"""]: ...
+    def button() -> Literal["""⬅️ Previous"""]: ...
 
 
 class Defautl:

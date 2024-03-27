@@ -1,13 +1,14 @@
 import asyncio
 
+from aiogram import html
 from aiogram.types import User
 from aiogram_dialog import DialogManager
 from fluentogram import TranslatorRunner
 
 from typing import TYPE_CHECKING
 
-from bot.src.utils import UserCache, UserKeys
-from bot.src.services.user_data_getters import _get_user_data
+from bot.src.services import UserCache
+from bot.src.services.user_data_getters import get_user_data
 
 if TYPE_CHECKING:
     from bot.locales.stub import TranslatorRunner
@@ -18,9 +19,9 @@ async def main_menu_getter(dialog_manager: DialogManager,
                            event_from_user: User,
                            cache: UserCache,
                            **kwargs):
-    username = event_from_user.full_name or event_from_user.username
+    username = html.quote(event_from_user.full_name or event_from_user.username)
     user_cache_data = await cache.get_all_data(event_from_user.id)
-    user_data = await asyncio.to_thread(_get_user_data, i18n=i18n, data=user_cache_data)
+    user_data = await asyncio.to_thread(get_user_data, i18n=i18n, data=user_cache_data)
     return {
         'main_menu_message': i18n.main.menu.message(
             username=username,
@@ -35,5 +36,6 @@ async def main_menu_getter(dialog_manager: DialogManager,
         ),
         'subtract_calories': i18n.subtract.calories(),
         'plus_calories': i18n.plus.calories(),
-        'change_data_button': i18n.change.data.button()
+        'change_data_button': i18n.change.data.button(),
+        'settings_button': i18n.settings.button()
     }

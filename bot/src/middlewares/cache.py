@@ -3,7 +3,7 @@ from typing import Callable, Any, Awaitable
 from aiogram import BaseMiddleware
 from aiogram.types import TelegramObject, User
 
-from ..utils import UserCache, UserKeys, UserStatus
+from ..services import UserCache, UserCacheKeys, UserStatus
 
 
 class CacheMiddleware(BaseMiddleware):
@@ -20,7 +20,7 @@ class CacheMiddleware(BaseMiddleware):
         cache: UserCache = data['cache']
         user_id = user.id
         if not await cache.user_exists(user_id):
-            await cache.set_data(user_id=user_id, mapping_values={UserKeys.UserData.language(): user.language_code,
-                                                                  UserKeys.status(): UserStatus.NEW.value})
+            await cache.set_data(user_id=user_id, mapping_values={UserCacheKeys.Settings.language(): user.language_code,
+                                                                  UserCacheKeys.status(): UserStatus.NEW.value})
 
         return await handler(event, data)

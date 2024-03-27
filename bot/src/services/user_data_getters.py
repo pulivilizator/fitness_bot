@@ -1,5 +1,5 @@
 from typing import TYPE_CHECKING, Literal
-from bot.src.utils import Language, ActiveLevel, Sex, UserKeys
+from bot.src.services import Language, ActiveLevel, Sex, UserCacheKeys
 
 from fluentogram import TranslatorRunner
 
@@ -7,22 +7,22 @@ if TYPE_CHECKING:
     from bot.locales.stub import TranslatorRunner
 
 
-def _get_user_data(i18n: TranslatorRunner, data: dict, user_keys_id=False) -> dict:
+def get_user_data(i18n: TranslatorRunner, data: dict, user_keys_id=False) -> dict:
     return {
         'sex': sex_determining(
-            sex=data.get(UserKeys.UserData.gender(key_to_id=user_keys_id)),
+            sex=data.get(UserCacheKeys.UserData.gender(key_to_id=user_keys_id)),
             i18n=i18n),
-        'age': data.get(UserKeys.UserData.age(key_to_id=user_keys_id)) or i18n.defautl.parameter(),
-        'height': data.get(UserKeys.UserData.height(key_to_id=user_keys_id)) or i18n.defautl.parameter(),
-        'weight': data.get(UserKeys.UserData.weight(key_to_id=user_keys_id)) or i18n.defautl.parameter(),
-        'max_calories': data.get(UserKeys.Calories.maximum_quantity(key_to_id=user_keys_id)) or i18n.defautl.parameter(),
-        'current_calories': data.get(UserKeys.Calories.current_quantity(key_to_id=user_keys_id)),
+        'age': data.get(UserCacheKeys.UserData.age(key_to_id=user_keys_id)) or i18n.defautl.parameter(),
+        'height': data.get(UserCacheKeys.UserData.height(key_to_id=user_keys_id)) or i18n.defautl.parameter(),
+        'weight': data.get(UserCacheKeys.UserData.weight(key_to_id=user_keys_id)) or i18n.defautl.parameter(),
+        'max_calories': data.get(UserCacheKeys.Calories.maximum_quantity(key_to_id=user_keys_id)) or i18n.defautl.parameter(),
+        'current_calories': data.get(UserCacheKeys.Calories.current_quantity(key_to_id=user_keys_id)),
         'lang': lang_determining(
-            lang=data.get(UserKeys.UserData.language(key_to_id=user_keys_id)),
+            lang=data.get(UserCacheKeys.Settings.language(key_to_id=user_keys_id)),
             i18n=i18n
         ),
         'activity': activity_determining(
-            activity=data.get(UserKeys.UserData.activity(key_to_id=user_keys_id)),
+            activity=data.get(UserCacheKeys.UserData.activity(key_to_id=user_keys_id)),
             i18n=i18n)
     }
 

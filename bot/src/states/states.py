@@ -22,5 +22,17 @@ class SubtractCaloriesSG(StatesGroup):
 class PlusCaloriesSG(StatesGroup):
     plus = State()
 
+
 class ChangeDataSG(StatesGroup):
-    start_change_data = State()
+    change_data_menu = State()
+    change_data_sex = State()
+    change_data_age = State()
+    change_data_activity = State()
+    change_data_weight = State()
+    change_data_height = State()
+    change_data_calories = State()
+
+
+class SettingsSG(StatesGroup):
+    settings_menu = State()
+    change_language = State()

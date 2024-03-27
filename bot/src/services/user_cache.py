@@ -3,6 +3,7 @@ from typing import TypeAlias, Optional, Sequence
 
 from redis.asyncio import Redis
 
+
 class RedisKeys:
     def __init__(self, *args: Sequence):
         self._keys: list = list(args)
@@ -16,64 +17,46 @@ class RedisKeys:
         return '_'.join(self._keys)
 
 
-# class UserKeys:
-#     # status = RedisKeys('status')
-#
-#     @staticmethod
-#     def status(key_to_id=False):
-#         return RedisKeys('status').__str__(id=key_to_id)
-#
-#     class Settings:
-#         language = RedisKeys('change_data', 'language')
-#         gender = RedisKeys('change_data', 'gender')
-#         activity = RedisKeys('change_data', 'activity')
-#         weight = RedisKeys('change_data', 'weight')
-#         height = RedisKeys('change_data', 'height')
-#         age = RedisKeys('change_data', 'age')
-#
-#     class Calories:
-#         current_quantity = RedisKeys('calories', 'current')
-#         maximum_quantity = RedisKeys('calories', 'maximum')
-
-
-class UserKeys:
+class UserCacheKeys:
     @staticmethod
-    def status(key_to_id=False):
+    def status(key_to_id=False) -> str:
         return RedisKeys('status').__str__(id=key_to_id)
 
     class UserData:
         @staticmethod
-        def language(key_to_id=False):
-            return RedisKeys('user_data', 'language').__str__(id=key_to_id)
-
-        @staticmethod
-        def gender(key_to_id=False):
+        def gender(key_to_id=False) -> str:
             return RedisKeys('user_data', 'gender').__str__(id=key_to_id)
 
         @staticmethod
-        def activity(key_to_id=False):
+        def activity(key_to_id=False) -> str:
             return RedisKeys('user_data', 'activity').__str__(id=key_to_id)
 
         @staticmethod
-        def weight(key_to_id=False):
+        def weight(key_to_id=False) -> str:
             return RedisKeys('user_data', 'weight').__str__(id=key_to_id)
 
         @staticmethod
-        def height(key_to_id=False):
+        def height(key_to_id=False) -> str:
             return RedisKeys('user_data', 'height').__str__(id=key_to_id)
 
         @staticmethod
-        def age(key_to_id=False):
+        def age(key_to_id=False) -> str:
             return RedisKeys('user_data', 'age').__str__(id=key_to_id)
 
     class Calories:
         @staticmethod
-        def current_quantity(key_to_id=False):
+        def current_quantity(key_to_id=False) -> str:
+            print(__name__)
             return RedisKeys('calories', 'current').__str__(id=key_to_id)
 
         @staticmethod
-        def maximum_quantity(key_to_id=False):
+        def maximum_quantity(key_to_id=False) -> str:
             return RedisKeys('calories', 'maximum').__str__(id=key_to_id)
+
+    class Settings:
+        @staticmethod
+        def language(key_to_id=False) -> str:
+            return RedisKeys('settings', 'language').__str__(id=key_to_id)
 
 
 KeyType: TypeAlias = Optional[str]
@@ -137,4 +120,3 @@ class UserCache:
     async def user_exists(self, user_id: int) -> bool:
         user_key = f'user:{user_id}'
         return await self._r.exists(user_key)
-

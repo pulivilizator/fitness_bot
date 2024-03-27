@@ -5,8 +5,8 @@ from aiogram_dialog import DialogManager
 from fluentogram import TranslatorRunner
 
 from bot.src.services.calories import counting_calories
-from bot.src.services.user_data_getters import _get_user_data
-from bot.src.utils import Language, ActiveLevel, Sex
+from bot.src.services.user_data_getters import get_user_data
+from bot.src.services import Language, ActiveLevel, Sex
 
 if TYPE_CHECKING:
     from bot.locales.stub import TranslatorRunner
@@ -79,7 +79,7 @@ async def get_register_finish(dialog_manager: DialogManager, i18n: TranslatorRun
     calories_exists = 1 if calories else 0
     dialog_manager.dialog_data['max_calories'] = calories if calories else ''
     dialog_manager.dialog_data['current_calories'] = '0'
-    user_data = await asyncio.to_thread(_get_user_data, i18n=i18n, data=dialog_data, user_keys_id=True)
+    user_data = await asyncio.to_thread(get_user_data, i18n=i18n, data=dialog_data, user_keys_id=True)
     return {
         'register_finish_message': i18n.register.finish.message(
             sex=user_data['sex'],
