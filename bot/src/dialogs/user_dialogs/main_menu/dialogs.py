@@ -1,9 +1,10 @@
 from aiogram_dialog import Dialog, Window
-from aiogram_dialog.widgets.kbd import Next, Button, Radio, Column, Row, Back, Start
-from aiogram_dialog.widgets.text import Const, Format
+from aiogram_dialog.widgets.kbd import Row, Start
+from aiogram_dialog.widgets.text import Format
 
 from bot.src.states import MainMenuSG, SubtractCaloriesSG, PlusCaloriesSG, ChangeDataSG, SettingsSG
 from .getters import main_menu_getter
+
 
 menu_dialog = Dialog(
     Window(

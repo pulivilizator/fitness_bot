@@ -8,6 +8,7 @@ class UserRegisterSG(StatesGroup):
     weight = State()
     height = State()
     age = State()
+    timezone = State()
     finish = State()
 
 

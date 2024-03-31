@@ -12,9 +12,15 @@ class AioRedis:
     port: int
 
 @dataclass
+class Geoapify:
+    token: str
+
+
+@dataclass
 class Config:
     tg_bot: TgBot
     redis: AioRedis
+    geoapify: Geoapify
 
 
 def get_config():
@@ -28,5 +34,8 @@ def get_config():
         redis=AioRedis(
             host=env('REDIS_HOST'),
             port=env('REDIS_PORT')
+        ),
+        geoapify=Geoapify(
+            token=env('GEOAPIFY_TOKEN')
         )
     )

@@ -1,17 +1,20 @@
 from aiogram.enums import ContentType
 from aiogram_dialog import Dialog, Window
 from aiogram_dialog.widgets.input import TextInput, MessageInput
-from aiogram_dialog.widgets.kbd import Next, Button, Radio, Column, Row, Back
+from aiogram_dialog.widgets.kbd import Next, Button, Radio, Column, Row, Back, RequestLocation, WebApp, Url
+from aiogram_dialog.widgets.markup.reply_keyboard import ReplyKeyboardFactory
 from aiogram_dialog.widgets.text import Format
 
-from bot.src.services import UserCacheKeys
+from bot.src.db import CacheKeys
 from bot.src.states import UserRegisterSG
 
 from .getters import (get_sexes, get_lang_and_hello, get_active_levels, get_age, get_height, get_weight,
-                      get_register_finish)
-from .filters import weight_check, height_check, age_check
-from .handlers import (correct_parameters_handler, error_parameters_handler, change_lang_handler,
-                       register_finish_handler, set_user_language)
+                      get_register_finish, get_common_text, get_geo)
+from bot.src.filters import weight_check, height_check, age_check, geo_check
+from .handlers import (correct_parameters_handler, change_lang_handler,
+                       register_finish_handler, correct_geo_handler)
+from bot.src.setters import SetButtonChecked
+from bot.src.handlers.user_parameter_handlers import incorrect_text_handler, incorrect_message_handler
 
 register_dialog = Dialog(
     Window(
@@ -21,7 +24,7 @@ register_dialog = Dialog(
             Radio(
                 checked_text=Format('🔘 {item[1]}'),
                 unchecked_text=Format('⚪️ {item[1]}'),
-                id=UserCacheKeys.Settings.language(key_to_id=True),
+                id=CacheKeys.Settings.language(key_to_id=True),
                 item_id_getter=lambda x: x[0],
                 on_state_changed=change_lang_handler,
                 items='languages',
@@ -36,7 +39,7 @@ register_dialog = Dialog(
             Radio(
                 checked_text=Format('🔘 {item[1]}'),
                 unchecked_text=Format('⚪️ {item[1]}'),
-                id=UserCacheKeys.UserData.gender(key_to_id=True),
+                id=CacheKeys.UserData.gender(key_to_id=True),
                 item_id_getter=lambda x: x[0],
                 items='sexes',
             ),
@@ -52,9 +55,9 @@ register_dialog = Dialog(
             Radio(
                 checked_text=Format('🔘 {item[1]}'),
                 unchecked_text=Format('⚪️ {item[1]}'),
-                id=UserCacheKeys.UserData.activity(key_to_id=True),
+                id=CacheKeys.UserData.activity(key_to_id=True),
                 item_id_getter=lambda x: x[0],
-                items='active_levels',
+                items='activity_levels',
             ),
         ),
         Next(Format('{next}'), id='next_register'),
@@ -65,13 +68,13 @@ register_dialog = Dialog(
     Window(
         Format('{weight_message}'),
         TextInput(
-            id=UserCacheKeys.UserData.weight(key_to_id=True),
+            id=CacheKeys.UserData.weight(key_to_id=True),
             type_factory=weight_check,
             on_success=correct_parameters_handler,
-            on_error=error_parameters_handler
+            on_error=incorrect_text_handler
         ),
         MessageInput(
-            func=error_parameters_handler,
+            func=incorrect_message_handler,
             content_types=ContentType.ANY
         ),
         Next(Format('{next}'), id='next_register'),
@@ -82,13 +85,13 @@ register_dialog = Dialog(
     Window(
         Format('{height_message}'),
         TextInput(
-            id=UserCacheKeys.UserData.height(key_to_id=True),
+            id=CacheKeys.UserData.height(key_to_id=True),
             type_factory=height_check,
             on_success=correct_parameters_handler,
-            on_error=error_parameters_handler
+            on_error=incorrect_text_handler
         ),
         MessageInput(
-            func=error_parameters_handler,
+            func=incorrect_message_handler,
             content_types=ContentType.ANY
         ),
         Next(Format('{next}'), id='next_register'),
@@ -99,19 +102,36 @@ register_dialog = Dialog(
     Window(
         Format('{age_message}'),
         TextInput(
-            id=UserCacheKeys.UserData.age(key_to_id=True),
+            id=CacheKeys.UserData.age(key_to_id=True),
             type_factory=age_check,
             on_success=correct_parameters_handler,
-            on_error=error_parameters_handler
+            on_error=incorrect_text_handler
         ),
         MessageInput(
-            func=error_parameters_handler,
+            func=incorrect_message_handler,
             content_types=ContentType.ANY
         ),
         Next(Format('{next}'), id='next_register'),
         Back(Format('{previous}'), id='back_register'),
         state=UserRegisterSG.age,
         getter=get_age
+    ),
+    Window(
+        Format('{geo_message}'),
+        TextInput(
+            id=CacheKeys.Settings.timezone(key_to_id=True),
+            type_factory=geo_check,
+            on_success=correct_geo_handler,
+            on_error=incorrect_text_handler
+        ),
+        MessageInput(
+            func=incorrect_message_handler,
+            content_types=ContentType.ANY
+        ),
+        Next(Format('{next}'), id='next_register'),
+        Back(Format('{previous}'), id='back_register'),
+        state=UserRegisterSG.timezone,
+        getter=get_geo
     ),
     Window(
         Format('{register_finish_message}'),
@@ -124,5 +144,6 @@ register_dialog = Dialog(
         getter=get_register_finish,
         state=UserRegisterSG.finish
     ),
-    on_start=set_user_language
+    on_start=SetButtonChecked(CacheKeys.Settings.language),
+    getter=get_common_text
 )

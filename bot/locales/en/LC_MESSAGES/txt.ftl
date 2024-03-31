@@ -6,6 +6,13 @@ hello-register = Register
 lang-ru = 🇷🇺 Русский
 lang-en = 🇬🇧 English
 
+geo-message = Send your city or the city in which you are located in the time zone in the format: "Country, region, locality"
+
+              Or send your time zone in the format: "+HH:MM"
+              For example: "+03:00"
+geo-err-message = Incorrect data
+
+
 sex-message = Choose a gender:
 sex-wooman-button = 👩🏼 Female
 sex-man-button = 👨🏻 Male
@@ -26,16 +33,23 @@ height-err-message = Send the correct growth
 age-correctly-message = Send your age
 age-err-message = Send the correct age
 
+plus-calories-err-message = Send the correct number
+plus-calories-correctly-message = <b>Send the number of calories you need to add:</b>
+
+subtract-calories-err-message = Send the correct number
+subtract-calories-correctly-message = <b>Send the number of calories you need to substract:</b>
+
 register-finish-message =
     <b>Click the appropriate button if you are ready to complete the registration</b>
 
     <b>Your data:</b>
-    Gender: {$sex}
-    Age: {$age} y.o.
-    Activity level: {$activity}
-    Weight: {$weight} kg.
-    Height: {$height} cm.
-    Language: {$lang}
+    <i>Gender:</i> {$sex}
+    <i>Age:</i> {$age} y.o.
+    <i>Activity level:</i> {$activity}
+    <i>Weight:</i> {$weight} kg.
+    <i>Height:</i> {$height} cm.
+    <i>Time zone:</i> {$timezone}
+    <i>Language:</i> {$lang}
 
     {$calories_exists ->
         [1] <b>Daily calorie limit: {$calories} kcal.</b>
@@ -58,10 +72,10 @@ main-menu-message =
     <b>Daily calorie limit: {$calories} kcal.</b>
 
     <b>Received today {$current_calories} out of {$calories} kcal.</b>
-    <b>{$lang}</b>
+    <b>{$lang} / UTC {$timezone}</b>
 
-subtract-calories = ➖ Subtract calories
-plus-calories = ➕ Add calories
+subtract-calories-button = ➖ Subtract calories
+plus-calories-button = ➕ Add calories
 
 change-data-button = 💆 Change the data
 change-data-menu-message = <b>Change the data:</b>
@@ -69,13 +83,37 @@ change-data-menu-message = <b>Change the data:</b>
 change-data-sex-button = 👨🏻 Change the gender 👩🏼
 change-data-sex-message = <b>Choose a gender:</b>
 
+change-data-age-button = ⏳ Change age
+change-data-age-message = <b>Send new age:</b>
+
+change-data-activity-button = 🏃 Change the activity level
+change-data-activity-message = <b>Select the activity level:</b>
+
+change-data-weight-button = ⚖️ Change the weight
+change-data-weight-message = <b>Send weight:</b>
+
+change-data-height-button = 📐 Change the height
+change-data-height-message = <b>Send height:</b>
+
+change-data-calories-button = 🔧 Set the calorie limit manually
+change-data-calories-message = With manual installation, automatic calorie recalculation is disabled when personal parameters are changed.
+                               You can turn it on again in <b>settings</b>
+
+                               <b>Send the number of calories:</b>
+
+change-data-save-update-calories = ✔️ Save and update calories
+
 settings-button = 🛠 Settings
 settings-message = <b>Settings:</b>
 
 language-change-button = 🌍 Change the language
 language-change-message = <b>Select a language:</b>
 
+calories-counting-on = [ ✔️ ] Auto-calorie counting (Enabled)
+calories-counting-off = [    ] Auto-calorie counting (Disabled)
+
 next-button = Next ➡️
 previous-button = ⬅️ Previous
 
 defautl-parameter = <i>Undefined</i>
+defautl-timezone = 00:00

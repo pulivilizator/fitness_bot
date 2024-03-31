@@ -26,7 +26,9 @@ async def settings_menu_getter(dialog_manager: DialogManager,
                                **kwargs) -> dict[str, tuple | str]:
     return {
         'settings_message': i18n.settings.message(),
-        'change_language_button': i18n.language.change.button()
+        'change_language_button': i18n.language.change.button(),
+        'calories_counting_on': i18n.calories.counting.on(),
+        'calories_counting_off': i18n.calories.counting.off()
     }
 
 

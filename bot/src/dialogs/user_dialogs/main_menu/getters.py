@@ -7,7 +7,7 @@ from fluentogram import TranslatorRunner
 
 from typing import TYPE_CHECKING
 
-from bot.src.services import UserCache
+from bot.src.db import Cache
 from bot.src.services.user_data_getters import get_user_data
 
 if TYPE_CHECKING:
@@ -17,7 +17,7 @@ if TYPE_CHECKING:
 async def main_menu_getter(dialog_manager: DialogManager,
                            i18n: TranslatorRunner,
                            event_from_user: User,
-                           cache: UserCache,
+                           cache: Cache,
                            **kwargs):
     username = html.quote(event_from_user.full_name or event_from_user.username)
     user_cache_data = await cache.get_all_data(event_from_user.id)
@@ -33,9 +33,10 @@ async def main_menu_getter(dialog_manager: DialogManager,
             lang=user_data['lang'],
             calories=user_data['max_calories'],
             current_calories=user_data['current_calories'],
+            timezone=user_data['timezone']
         ),
-        'subtract_calories': i18n.subtract.calories(),
-        'plus_calories': i18n.plus.calories(),
+        'subtract_calories': i18n.subtract.calories.button(),
+        'plus_calories': i18n.plus.calories.button(),
         'change_data_button': i18n.change.data.button(),
         'settings_button': i18n.settings.button()
     }

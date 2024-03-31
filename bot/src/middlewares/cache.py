@@ -3,7 +3,8 @@ from typing import Callable, Any, Awaitable
 from aiogram import BaseMiddleware
 from aiogram.types import TelegramObject, User
 
-from ..services import UserCache, UserCacheKeys, UserStatus
+from ..services import UserStatus, RecountCalories
+from bot.src.db import Cache, CacheKeys
 
 
 class CacheMiddleware(BaseMiddleware):
@@ -17,10 +18,14 @@ class CacheMiddleware(BaseMiddleware):
 
         if user is None:
             return await handler(event, data)
-        cache: UserCache = data['cache']
+        cache: Cache = data['cache']
         user_id = user.id
         if not await cache.user_exists(user_id):
-            await cache.set_data(user_id=user_id, mapping_values={UserCacheKeys.Settings.language(): user.language_code,
-                                                                  UserCacheKeys.status(): UserStatus.NEW.value})
+            await cache.set_data(user_id=user_id,
+                                 mapping_values={
+                                     CacheKeys.Settings.language(): user.language_code,
+                                     CacheKeys.status(): UserStatus.NEW.value,
+                                     CacheKeys.Settings.automatic_calorie_counting(): RecountCalories.ON.value
+                                 })
 
         return await handler(event, data)

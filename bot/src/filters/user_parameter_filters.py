@@ -6,12 +6,26 @@ def weight_check(text: Any, *args, **kwargs):
         return text
     raise ValueError('weight')
 
+
 def height_check(text: Any):
     if text.isdigit() and 50 <= int(text) <= 300:
         return text
     raise ValueError('height')
 
+
 def age_check(text: Any):
     if text.isdigit() and 3 <= int(text) <= 150:
         return text
     raise ValueError('age')
+
+
+def calories_check(text: Any):
+    if text.isdigit():
+        return text
+    raise ValueError('calories')
+
+
+def geo_check(text: Any):
+    if (text[0] in ('+', '-') and text[1:].isdigit() and ':' in text) or 1 < len(text.split(',')) < 4:
+        return text
+    raise ValueError('geo')

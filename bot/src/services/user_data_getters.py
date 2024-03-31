@@ -1,5 +1,6 @@
 from typing import TYPE_CHECKING, Literal
-from bot.src.services import Language, ActiveLevel, Sex, UserCacheKeys
+from bot.src.services import Language, ActiveLevel, Sex
+from bot.src.db import CacheKeys
 
 from fluentogram import TranslatorRunner
 
@@ -10,19 +11,21 @@ if TYPE_CHECKING:
 def get_user_data(i18n: TranslatorRunner, data: dict, user_keys_id=False) -> dict:
     return {
         'sex': sex_determining(
-            sex=data.get(UserCacheKeys.UserData.gender(key_to_id=user_keys_id)),
+            sex=data.get(CacheKeys.UserData.gender(key_to_id=user_keys_id)),
             i18n=i18n),
-        'age': data.get(UserCacheKeys.UserData.age(key_to_id=user_keys_id)) or i18n.defautl.parameter(),
-        'height': data.get(UserCacheKeys.UserData.height(key_to_id=user_keys_id)) or i18n.defautl.parameter(),
-        'weight': data.get(UserCacheKeys.UserData.weight(key_to_id=user_keys_id)) or i18n.defautl.parameter(),
-        'max_calories': data.get(UserCacheKeys.Calories.maximum_quantity(key_to_id=user_keys_id)) or i18n.defautl.parameter(),
-        'current_calories': data.get(UserCacheKeys.Calories.current_quantity(key_to_id=user_keys_id)),
+        'age': data.get(CacheKeys.UserData.age(key_to_id=user_keys_id)) or i18n.defautl.parameter(),
+        'height': data.get(CacheKeys.UserData.height(key_to_id=user_keys_id)) or i18n.defautl.parameter(),
+        'timezone': data.get(CacheKeys.Settings.timezone(key_to_id=user_keys_id)) or i18n.defautl.parameter(),
+        'weight': data.get(CacheKeys.UserData.weight(key_to_id=user_keys_id)) or i18n.defautl.parameter(),
+        'max_calories': data.get(
+            CacheKeys.Calories.maximum_quantity(key_to_id=user_keys_id)) or i18n.defautl.parameter(),
+        'current_calories': data.get(CacheKeys.Calories.current_quantity(key_to_id=user_keys_id)),
         'lang': lang_determining(
-            lang=data.get(UserCacheKeys.Settings.language(key_to_id=user_keys_id)),
+            lang=data.get(CacheKeys.Settings.language(key_to_id=user_keys_id)),
             i18n=i18n
         ),
         'activity': activity_determining(
-            activity=data.get(UserCacheKeys.UserData.activity(key_to_id=user_keys_id)),
+            activity=data.get(CacheKeys.UserData.activity(key_to_id=user_keys_id)),
             i18n=i18n)
     }
 
@@ -45,8 +48,7 @@ def sex_determining(sex: Sex, i18n: TranslatorRunner) -> str:
             return i18n.sex.man.button()
         case Sex.FEMALE.value:
             return i18n.sex.wooman.button()
-        case _:
-            return i18n.defautl.parameter()
+    return i18n.defautl.parameter()
 
 
 def lang_determining(lang: Language, i18n: TranslatorRunner) -> str:

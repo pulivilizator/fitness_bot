@@ -1,1 +1,1 @@
-from .dialogs import substract_calories_dialog
+from .dialogs import subtract_calories_dialog
