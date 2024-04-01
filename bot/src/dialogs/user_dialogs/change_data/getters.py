@@ -71,7 +71,7 @@ async def get_height(dialog_manager: DialogManager,
     return {
         'change_data_height_message': i18n.change.data.height.message()
     }
-
+#
 
 async def get_calories(dialog_manager: DialogManager,
                        i18n: TranslatorRunner,
