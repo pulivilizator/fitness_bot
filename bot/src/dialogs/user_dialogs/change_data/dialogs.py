@@ -13,9 +13,9 @@ from bot.src.setters import SetButtonChecked
 from .handlers import (change_data_sex_handler, change_data_correct_age_handler, change_data_activity_handler,
                        change_data_correct_height_handler, change_data_correct_weight_handler,
                        change_data_correct_calories_handler, update_calories_handler)
-from .getters import (get_common_text, change_data_menu_getter, change_data_sex_getter,
-                      change_data_age_getter, change_data_activity_getter, change_data_height_getter,
-                      change_data_weight_getter, change_data_calories_getter)
+from .getters import (get_common_text, get_menu, get_sexes,
+                      get_age, get_activities, get_height,
+                      get_weight, get_calories)
 
 change_data_dialog = Dialog(
     Window(
@@ -42,7 +42,7 @@ change_data_dialog = Dialog(
         Cancel(Format('{change_data_save_update_calories}')),
         Cancel(Format('{previous_button}')),
         state=ChangeDataSG.change_data_menu,
-        getter=change_data_menu_getter
+        getter=get_menu
     ),
 
     Window(
@@ -61,7 +61,7 @@ change_data_dialog = Dialog(
                  state=ChangeDataSG.change_data_menu,
                  id='back_to_menu'),
         state=ChangeDataSG.change_data_sex,
-        getter=change_data_sex_getter
+        getter=get_sexes
     ),
     Window(
         Format('{change_data_activity_message}'),
@@ -79,7 +79,7 @@ change_data_dialog = Dialog(
                  state=ChangeDataSG.change_data_menu,
                  id='back_to_menu'),
         state=ChangeDataSG.change_data_activity,
-        getter=change_data_activity_getter
+        getter=get_activities
     ),
     Window(
         Format('{change_data_age_message}'),
@@ -97,7 +97,7 @@ change_data_dialog = Dialog(
                  state=ChangeDataSG.change_data_menu,
                  id='back_to_menu'),
         state=ChangeDataSG.change_data_age,
-        getter=change_data_age_getter
+        getter=get_age
     ),
     Window(
         Format('{change_data_weight_message}'),
@@ -115,7 +115,7 @@ change_data_dialog = Dialog(
                  state=ChangeDataSG.change_data_menu,
                  id='back_to_menu'),
         state=ChangeDataSG.change_data_weight,
-        getter=change_data_weight_getter
+        getter=get_weight
     ),
     Window(
         Format('{change_data_height_message}'),
@@ -133,7 +133,7 @@ change_data_dialog = Dialog(
                  state=ChangeDataSG.change_data_menu,
                  id='back_to_menu'),
         state=ChangeDataSG.change_data_height,
-        getter=change_data_height_getter
+        getter=get_height
     ),
     Window(
         Format('{change_data_calories_message}'),
@@ -151,7 +151,7 @@ change_data_dialog = Dialog(
                  state=ChangeDataSG.change_data_menu,
                  id='back_to_menu'),
         state=ChangeDataSG.change_data_calories,
-        getter=change_data_calories_getter
+        getter=get_calories
     ),
     on_start=SetButtonChecked(
         CacheKeys.UserData.gender,

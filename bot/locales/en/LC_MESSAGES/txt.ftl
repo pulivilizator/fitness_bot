@@ -6,10 +6,10 @@ hello-register = Register
 lang-ru = 🇷🇺 Русский
 lang-en = 🇬🇧 English
 
-geo-message = Send your city or the city in which you are located in the time zone in the format: "Country, region, locality"
+geo-message = Send your city or the city in which you are located in the time zone in the format: <b>"Country, region, locality"</b>
 
-              Or send your time zone in the format: "+HH:MM"
-              For example: "+03:00"
+              Or send your time zone in the format: <b>"+HH:MM"</b>
+              For example: <b>"+03:00"</b>
 geo-err-message = Incorrect data
 
 

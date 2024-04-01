@@ -9,9 +9,9 @@ if TYPE_CHECKING:
     from bot.locales.stub import TranslatorRunner
 
 
-async def change_data_menu_getter(dialog_manager: DialogManager,
-                                  i18n: TranslatorRunner,
-                                  **kwargs) -> dict[str, tuple | str]:
+async def get_menu(dialog_manager: DialogManager,
+                   i18n: TranslatorRunner,
+                   **kwargs) -> dict[str, tuple | str]:
     return {
         'change_data_menu_message': i18n.change.data.menu.message(),
         'change_data_sex_button': i18n.change.data.sex.button(),
@@ -24,9 +24,9 @@ async def change_data_menu_getter(dialog_manager: DialogManager,
     }
 
 
-async def change_data_sex_getter(dialog_manager: DialogManager,
-                                 i18n: TranslatorRunner,
-                                 **kwargs) -> dict[str, tuple | str]:
+async def get_sexes(dialog_manager: DialogManager,
+                    i18n: TranslatorRunner,
+                    **kwargs) -> dict[str, tuple | str]:
     return {
         'change_data_sex_message': i18n.change.data.sex.message(),
         'sexes':
@@ -36,9 +36,9 @@ async def change_data_sex_getter(dialog_manager: DialogManager,
     }
 
 
-async def change_data_activity_getter(dialog_manager: DialogManager,
-                                      i18n: TranslatorRunner,
-                                      **kwargs) -> dict[str, tuple | str]:
+async def get_activities(dialog_manager: DialogManager,
+                         i18n: TranslatorRunner,
+                         **kwargs) -> dict[str, tuple | str]:
     return {
         'change_data_activity_message': i18n.change.data.activity.message(),
         'activity_levels': (
@@ -49,33 +49,33 @@ async def change_data_activity_getter(dialog_manager: DialogManager,
     }
 
 
-async def change_data_age_getter(dialog_manager: DialogManager,
-                                 i18n: TranslatorRunner,
-                                 **kwargs) -> dict[str, tuple | str]:
+async def get_age(dialog_manager: DialogManager,
+                  i18n: TranslatorRunner,
+                  **kwargs) -> dict[str, tuple | str]:
     return {
         'change_data_age_message': i18n.change.data.age.message()
     }
 
 
-async def change_data_weight_getter(dialog_manager: DialogManager,
-                                    i18n: TranslatorRunner,
-                                    **kwargs) -> dict[str, tuple | str]:
+async def get_weight(dialog_manager: DialogManager,
+                     i18n: TranslatorRunner,
+                     **kwargs) -> dict[str, tuple | str]:
     return {
         'change_data_weight_message': i18n.change.data.weight.message()
     }
 
 
-async def change_data_height_getter(dialog_manager: DialogManager,
-                                    i18n: TranslatorRunner,
-                                    **kwargs) -> dict[str, tuple | str]:
+async def get_height(dialog_manager: DialogManager,
+                     i18n: TranslatorRunner,
+                     **kwargs) -> dict[str, tuple | str]:
     return {
         'change_data_height_message': i18n.change.data.height.message()
     }
 
 
-async def change_data_calories_getter(dialog_manager: DialogManager,
-                                      i18n: TranslatorRunner,
-                                      **kwargs) -> dict[str, tuple | str]:
+async def get_calories(dialog_manager: DialogManager,
+                       i18n: TranslatorRunner,
+                       **kwargs) -> dict[str, tuple | str]:
     return {
         'change_data_calories_message': i18n.change.data.calories.message()
     }
