@@ -26,6 +26,6 @@ def calories_check(text: Any):
 
 
 def geo_check(text: Any):
-    if (text[0] in ('+', '-') and text[1:].isdigit() and ':' in text) or 1 < len(text.split(',')) < 4:
+    if (text[0] in ('+', '-') and ':' in text and text[1:].split(':')[0].isdigit()) or 1 < len(text[1:].split(',')) < 4:
         return text
     raise ValueError('geo')

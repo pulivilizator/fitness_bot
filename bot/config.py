@@ -6,10 +6,12 @@ from dataclasses import dataclass
 class TgBot:
     token: str
 
+
 @dataclass
 class AioRedis:
     host: str
     port: int
+
 
 @dataclass
 class Geoapify:
