@@ -3,7 +3,7 @@
 ---
 
 Технологии:
-python 3.11.8
-aiogram
-aiogram-dialogs
-redis
+- python 3.11.8
+- aiogram
+- aiogram-dialogs
+- redis
