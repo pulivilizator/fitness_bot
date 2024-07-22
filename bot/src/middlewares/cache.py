@@ -3,8 +3,8 @@ from typing import Callable, Any, Awaitable
 from aiogram import BaseMiddleware
 from aiogram.types import TelegramObject, User
 
-from ..services import UserStatus, RecountCalories
-from bot.src.db import Cache, CacheKeys
+from bot.src.utils.enums import UserStatus, RecountCalories
+from bot.src.data_stores import Cache, CacheKeys
 
 
 class CacheMiddleware(BaseMiddleware):

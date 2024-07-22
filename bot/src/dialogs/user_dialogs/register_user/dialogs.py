@@ -5,7 +5,7 @@ from aiogram_dialog.widgets.kbd import Next, Button, Radio, Column, Row, Back, R
 from aiogram_dialog.widgets.markup.reply_keyboard import ReplyKeyboardFactory
 from aiogram_dialog.widgets.text import Format
 
-from bot.src.db import CacheKeys
+from bot.src.data_stores import CacheKeys
 from bot.src.states import UserRegisterSG
 
 from .getters import (get_sexes, get_lang_and_hello, get_active_levels, get_age, get_height, get_weight,

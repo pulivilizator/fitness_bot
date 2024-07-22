@@ -3,7 +3,7 @@ from fluentogram import TranslatorRunner
 
 from typing import TYPE_CHECKING
 
-from bot.src.services import Language
+from bot.src.utils.enums import Language
 
 if TYPE_CHECKING:
     from bot.locales.stub import TranslatorRunner

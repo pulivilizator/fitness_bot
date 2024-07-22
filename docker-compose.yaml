@@ -12,6 +12,16 @@ services:
     depends_on:
       redis:
         condition: service_healthy
+  nats:
+    image: nats:2.10.17
+    entrypoint: /nats-server
+    command: "-c /config/server.conf"
+    ports:
+      - "4222:4222"
+      - "8222:8222"
+    volumes:
+      - ./nats-data/data:/data
+      - ./nats-data/config/server.conf:/config/server.conf
   redis:
     image: redis:7.2.4
     ports:

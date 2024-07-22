@@ -2,7 +2,7 @@ from aiogram.types import CallbackQuery
 from aiogram_dialog import DialogManager
 from aiogram_dialog.widgets.kbd import ManagedCheckbox
 
-from bot.src.db import Cache, CacheKeys
+from bot.src.data_stores import Cache, CacheKeys
 
 
 async def settings_calories_counting_handler(callback: CallbackQuery,

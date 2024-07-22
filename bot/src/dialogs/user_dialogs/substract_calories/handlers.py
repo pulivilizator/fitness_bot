@@ -3,7 +3,7 @@ from aiogram.types import Message
 from aiogram_dialog import DialogManager
 from aiogram_dialog.widgets.input import ManagedTextInput
 
-from bot.src.db import Cache, CacheKeys
+from bot.src.data_stores import Cache, CacheKeys
 
 
 async def subtract_correct_calories_handler(message: Message,

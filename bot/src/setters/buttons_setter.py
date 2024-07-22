@@ -4,7 +4,7 @@ from typing import Callable, Any
 from aiogram_dialog import DialogManager
 from aiogram_dialog.widgets.common import ManagedWidget
 
-from bot.src.db import Cache
+from bot.src.data_stores import Cache
 
 
 class SetButtonChecked:

@@ -3,7 +3,7 @@ from aiogram_dialog.widgets.kbd import Back, SwitchTo, Row, Radio, Cancel, Check
 from aiogram_dialog.widgets.text import Format
 
 from bot.src.states import SettingsSG
-from bot.src.db import CacheKeys
+from bot.src.data_stores import CacheKeys
 from .getters import get_langs, settings_menu_getter, get_common_text
 from .handlers import settings_calories_counting_handler
 

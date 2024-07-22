@@ -4,10 +4,10 @@ from aiogram_dialog import DialogManager
 from aiogram_dialog.widgets.input import MessageInput, ManagedTextInput
 from aiogram_dialog.widgets.kbd import ManagedRadio
 
-from bot.src.db import Cache, CacheKeys
+from bot.src.data_stores import Cache, CacheKeys
 from bot.src.states import ChangeDataSG
-from bot.src.services import RecountCalories, get_user_data, counting_calories
-
+from bot.src.services import get_user_data, counting_calories
+from bot.src.utils.enums import RecountCalories
 
 async def change_data_sex_handler(callback: CallbackQuery,
                                   widget: ManagedRadio,

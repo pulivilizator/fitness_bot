@@ -7,7 +7,7 @@ from fluentogram import TranslatorRunner
 
 from typing import TYPE_CHECKING
 
-from bot.src.db import Cache
+from bot.src.data_stores import Cache
 from bot.src.services.user_data_getters import get_user_data
 
 if TYPE_CHECKING:

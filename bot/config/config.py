@@ -1,21 +1,7 @@
 from environs import Env
 from dataclasses import dataclass
 
-
-@dataclass
-class TgBot:
-    token: str
-
-
-@dataclass
-class AioRedis:
-    host: str
-    port: int
-
-
-@dataclass
-class Geoapify:
-    token: str
+from .models import *
 
 
 @dataclass
@@ -23,6 +9,8 @@ class Config:
     tg_bot: TgBot
     redis: AioRedis
     geoapify: Geoapify
+    nats: Nats
+    db: DbConfig
 
 
 def get_config():
@@ -39,5 +27,11 @@ def get_config():
         ),
         geoapify=Geoapify(
             token=env('GEOAPIFY_TOKEN')
+        ),
+        nats=Nats(
+            servers=[f'nats://{x}' for x in env.list('NATS_SERVERS', delimiter=' ')]
+        ),
+        db=DbConfig(
+            dsn=env('DB_DSN')
         )
     )

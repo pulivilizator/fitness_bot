@@ -26,6 +26,14 @@ def calories_check(text: Any):
 
 
 def geo_check(text: Any):
-    if (text[0] in ('+', '-') and ':' in text and text[1:].split(':')[0].isdigit()) or 1 < len(text[1:].split(',')) < 4:
+    if (text[0] in ('+', '-') and  # начинается чи часовой пояс в плюса или минуса
+            ':' in text and  # указаны ли минуты согласно паттерну
+            text[1:].split(':')[0].isdigit() and  # правильный ли формат часов
+            0 < int(text[1:].split(':')[0]) <= 24 and  # проверка диапазона часов
+            text.split(':')[1].isdigit() and  # правильный ли формат минут
+            0 <= int(text.split(':')[1]) < 60  # проверка диапазона минут
+    ):
+        return text
+    elif 1 < len(text[1:].split(',')) < 4:
         return text
     raise ValueError('geo')

@@ -4,10 +4,10 @@ from typing import TYPE_CHECKING
 from aiogram_dialog import DialogManager
 from fluentogram import TranslatorRunner
 
-from bot.src.db import CacheKeys
+from bot.src.data_stores import CacheKeys
 from bot.src.services.calories import counting_calories
 from bot.src.services.user_data_getters import get_user_data
-from bot.src.services import Language, ActiveLevel, Sex
+from bot.src.utils.enums import Language, ActiveLevel, Sex
 
 if TYPE_CHECKING:
     from bot.locales.stub import TranslatorRunner

@@ -3,9 +3,9 @@ from aiogram.filters import CommandStart
 from aiogram.types import Message
 from aiogram_dialog import DialogManager, StartMode
 
-from ..services import UserStatus
+from bot.src.utils.enums import UserStatus
 from bot.src.states import UserRegisterSG, MainMenuSG
-from bot.src.db import Cache, CacheKeys
+from bot.src.data_stores import Cache, CacheKeys
 
 commands_router = Router()
 

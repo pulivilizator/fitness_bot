@@ -7,9 +7,10 @@ lang-ru = 🇷🇺 Русский
 lang-en = 🇬🇧 English
 
 geo-message = Send your city or the city in which you are located in the time zone in the format: <b>"Country, region, locality"</b>
-
               Or send your time zone in the format: <b>"+HH:MM"</b>
               For example: <b>"+03:00"</b>
+
+              This is necessary to automatically reset the calories to zero when the next day arrives.
 geo-err-message = Incorrect data
 
 
@@ -74,8 +75,8 @@ main-menu-message =
     <b>Received today {$current_calories} out of {$calories} kcal.</b>
     <b>{$lang} / UTC {$timezone}</b>
 
-subtract-calories-button = ➖ Subtract calories
-plus-calories-button = ➕ Add calories
+subtract-calories-button = ➖
+plus-calories-button = ➕
 
 change-data-button = 💆 Change the data
 change-data-menu-message = <b>Change the data:</b>

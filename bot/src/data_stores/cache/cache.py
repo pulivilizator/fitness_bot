@@ -23,16 +23,18 @@ class Cache:
         logger.info(f'{user_key} set data')
         if mapping_values:
             set_data = {k: str(v)
-            if not isinstance(v, bool)
-            else '0'
-            if not v
-            else '1'
+                        if not isinstance(v, bool)
+                        else '0'
+                        if not v
+                        else '1'
                         for k, v in mapping_values.items()}
             await self._r.hset(name=user_key, mapping=set_data)
-            return
-        if isinstance(value, bool):
-            value = int(value)
-        await self._r.hset(name=user_key, key=str(key), value=str(value))
+        else:
+            if isinstance(value, bool):
+                value = int(value)
+            await self._r.hset(name=user_key, key=str(key), value=str(value))
+
+        await self._r.expire(user_key, 10800)  # 3 часа
 
     async def get_value(self, user_id: int, key: KeyType = None) -> ValueType:
         user_key = f'user:{user_id}'

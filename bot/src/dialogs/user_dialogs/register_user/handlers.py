@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING
 from bot.src.dialogs.user_dialogs.register_user.services import create_final_user_data
 from bot.src.services.timezone import update_dialog_data
 from bot.src.states import MainMenuSG
-from bot.src.db import Cache, CacheKeys
+from bot.src.data_stores import Cache, CacheKeys
 
 if TYPE_CHECKING:
     from bot.locales.stub import TranslatorRunner

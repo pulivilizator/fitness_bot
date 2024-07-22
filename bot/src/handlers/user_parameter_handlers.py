@@ -6,7 +6,7 @@ from aiogram_dialog import DialogManager
 from aiogram_dialog.widgets.input import MessageInput, ManagedTextInput
 from fluentogram import TranslatorRunner
 
-from bot.src.db import Cache, CacheKeys
+from bot.src.data_stores import Cache, CacheKeys
 
 if TYPE_CHECKING:
     from bot.locales.stub import TranslatorRunner

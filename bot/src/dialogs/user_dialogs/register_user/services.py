@@ -1,7 +1,7 @@
 from aiogram_dialog import DialogManager
 
-from bot.src.services import UserStatus
-from bot.src.db import CacheKeys
+from bot.src.utils.enums import UserStatus
+from bot.src.data_stores import CacheKeys
 
 
 def create_final_user_data(result_data: dict, dialog_manager: DialogManager) -> dict:

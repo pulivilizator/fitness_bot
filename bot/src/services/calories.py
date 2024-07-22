@@ -1,6 +1,6 @@
 from typing import Optional
-from bot.src.services import ActiveLevel, Sex
-from bot.src.db import CacheKeys
+from bot.src.utils.enums import ActiveLevel, Sex
+from bot.src.data_stores import CacheKeys
 
 
 def get_active_multiplier(active: str) -> float:

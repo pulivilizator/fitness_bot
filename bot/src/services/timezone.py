@@ -1,8 +1,8 @@
 from aiogram.client.session.aiohttp import AiohttpSession
 from aiogram_dialog import DialogManager
 
-from .static_data import TIMEZONE_URL
-from bot.src.db import CacheKeys
+from bot.src.utils.enums import TIMEZONE_URL
+from bot.src.data_stores import CacheKeys
 
 
 async def get_timezone_api(text: str, session: AiohttpSession, token: str) -> str:

@@ -4,7 +4,7 @@ from aiogram_dialog.widgets.input import TextInput, MessageInput
 from aiogram_dialog.widgets.kbd import Cancel, SwitchTo, Row, Radio, Column
 from aiogram_dialog.widgets.text import Format
 
-from bot.src.db import CacheKeys
+from bot.src.data_stores import CacheKeys
 from bot.src.filters import age_check, weight_check, height_check, calories_check
 from bot.src.handlers.user_parameter_handlers import incorrect_message_handler, incorrect_text_handler
 from bot.src.states import ChangeDataSG

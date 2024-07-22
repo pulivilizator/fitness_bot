@@ -4,7 +4,7 @@ from aiogram import BaseMiddleware
 from aiogram.types import User, TelegramObject
 from fluentogram import TranslatorHub
 
-from bot.src.db import Cache, CacheKeys
+from bot.src.data_stores import Cache, CacheKeys
 
 
 class TranslatorRunnerMiddleware(BaseMiddleware):

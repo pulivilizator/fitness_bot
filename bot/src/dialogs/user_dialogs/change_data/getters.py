@@ -1,7 +1,7 @@
 from aiogram_dialog import DialogManager
 from fluentogram import TranslatorRunner
 
-from bot.src.services import Sex, ActiveLevel
+from bot.src.utils.enums import Sex, ActiveLevel
 
 from typing import TYPE_CHECKING
 

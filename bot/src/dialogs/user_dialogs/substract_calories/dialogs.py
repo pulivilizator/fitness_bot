@@ -4,7 +4,7 @@ from aiogram_dialog.widgets.input import MessageInput, TextInput
 from aiogram_dialog.widgets.kbd import Cancel
 from aiogram_dialog.widgets.text import Format
 
-from bot.src.db import CacheKeys
+from bot.src.data_stores import CacheKeys
 from bot.src.filters import calories_check
 from bot.src.handlers.user_parameter_handlers import incorrect_text_handler, incorrect_message_handler
 from bot.src.states import SubtractCaloriesSG

@@ -1,6 +1,6 @@
 from typing import TYPE_CHECKING, Literal
-from bot.src.services import Language, ActiveLevel, Sex
-from bot.src.db import CacheKeys
+from bot.src.utils.enums import Language, ActiveLevel, Sex
+from bot.src.data_stores import CacheKeys
 
 from fluentogram import TranslatorRunner
 
