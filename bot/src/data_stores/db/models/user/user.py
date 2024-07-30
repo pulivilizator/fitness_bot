@@ -12,7 +12,7 @@ class User(Base):
     __tablename__ = 'users'
 
     telegram_id: Mapped[int] = mapped_column(BigInteger, primary_key=True)
-    activity_level: Mapped[str] = mapped_column(SQLAlchemyEnum(ActiveLevel), nullable=True)
+    activity: Mapped[str] = mapped_column(SQLAlchemyEnum(ActiveLevel), nullable=True)
     gender: Mapped[str] = mapped_column(SQLAlchemyEnum(Sex), nullable=True)
     weight: Mapped[int] = mapped_column(SmallInteger, nullable=True)
     height: Mapped[int] = mapped_column(SmallInteger, nullable=True)
@@ -47,8 +47,8 @@ class UserCalories(Base):
     __tablename__ = 'user_calories'
 
     id: Mapped[int] = mapped_column(BigInteger, primary_key=True, autoincrement=True)
-    maximum_quantity: Mapped[int] = mapped_column(SmallInteger, nullable=True)
-    current_quantity: Mapped[int] = mapped_column(SmallInteger, default=0)
+    maximum: Mapped[int] = mapped_column(SmallInteger, nullable=True)
+    current: Mapped[int] = mapped_column(SmallInteger, default=0)
     last_updated_at: Mapped[datetime] = mapped_column(DateTime, nullable=False, onupdate=func.now(),
                                                       default=func.now())
 
@@ -59,5 +59,5 @@ class UserCalories(Base):
     user: Mapped['User'] = relationship(back_populates='calories')
 
     __table_args__ = (
-        CheckConstraint('current_quantity >=0', name='current_quantity_check'),
+        CheckConstraint('current >=0', name='current_quantity_check'),
     )

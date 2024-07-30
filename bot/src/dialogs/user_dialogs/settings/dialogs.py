@@ -5,7 +5,7 @@ from aiogram_dialog.widgets.text import Format
 from bot.src.states import SettingsSG
 from bot.src.data_stores import CacheKeys
 from .getters import get_langs, settings_menu_getter, get_common_text
-from .handlers import settings_calories_counting_handler
+from .handlers import settings_calories_counting_handler, to_menu_onclick
 
 from ..register_user.handlers import change_lang_handler
 from bot.src.setters import SetButtonChecked
@@ -25,7 +25,7 @@ settings_dialog = Dialog(
                  state=SettingsSG.change_language,
                  id='change_language'),
 
-        Cancel(Format('{previous_button}'), id='previous'),
+        Cancel(Format('{previous_button}'), id='previous', on_click=to_menu_onclick),
         state=SettingsSG.settings_menu,
         getter=settings_menu_getter
     ),
@@ -41,7 +41,9 @@ settings_dialog = Dialog(
                 items='languages',
             ),
         ),
-        SwitchTo(Format('{previous_button}'), id='previous', state=SettingsSG.settings_menu),
+        SwitchTo(Format('{previous_button}'),
+                 id='previous',
+                 state=SettingsSG.settings_menu),
         getter=get_langs,
         state=SettingsSG.change_language,
     ),

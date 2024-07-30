@@ -22,7 +22,7 @@ async def subtract_correct_calories_handler(message: Message,
         new_calories_value = 0
     await update_user_data(session=session,
                            user_id=user_id,
-                           user_data={'calories.current_quantity': new_calories_value})
+                           user_data={CacheKeys.Calories.current_quantity(): new_calories_value})
     await cache.set_data(
         user_id=user_id,
         key=CacheKeys.Calories.current_quantity(),

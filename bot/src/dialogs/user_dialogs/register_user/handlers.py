@@ -67,3 +67,5 @@ async def register_finish_handler(callback: CallbackQuery,
 
     await dialog_manager.done()
     await dialog_manager.start(state=MainMenuSG.main_menu)
+
+
