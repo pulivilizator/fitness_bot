@@ -22,11 +22,7 @@ class Cache:
         user_key = f'user:{user_id}'
         logger.info(f'{user_key} set data')
         if mapping_values:
-            set_data = {k: str(v)
-                        if not isinstance(v, bool)
-                        else '0'
-                        if not v
-                        else '1'
+            set_data = {k: self._validate_value(v)
                         for k, v in mapping_values.items()}
             await self._r.hset(name=user_key, mapping=set_data)
         else:
@@ -66,3 +62,11 @@ class Cache:
     async def user_exists(self, user_id: int) -> bool:
         user_key = f'user:{user_id}'
         return await self._r.exists(user_key)
+
+    @staticmethod
+    def _validate_value(value):
+        if value is None:
+            return ''
+        if isinstance(value, bool):
+            return '0' if not value else '1'
+        return str(value)

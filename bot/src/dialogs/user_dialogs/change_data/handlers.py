@@ -94,7 +94,7 @@ async def change_data_correct_calories_handler(message: Message,
     await cache.set_data(
         user_id=message.from_user.id,
         mapping_values={CacheKeys.Calories.maximum_quantity(): text,
-                        CacheKeys.Settings.automatic_calorie_counting(): RecountCalories.OFF.value}
+                        CacheKeys.Settings.automatic_calorie_counting(): RecountCalories.OFF}
     )
 
     await dialog_manager.switch_to(state=ChangeDataSG.change_data_menu)
@@ -105,7 +105,7 @@ async def change_data_correct_calories_handler(message: Message,
 async def update_calories_handler(_, dialog_manager: DialogManager):
     cache: Cache = dialog_manager.middleware_data.get('cache')
     user_data = await cache.get_all_data(user_id=dialog_manager.event.from_user.id)
-    if user_data[CacheKeys.Settings.automatic_calorie_counting()] == RecountCalories.ON.value:
+    if user_data[CacheKeys.Settings.automatic_calorie_counting()] == RecountCalories.ON:
         calories = counting_calories(user_data=user_data)
         await cache.set_data(
             user_id=dialog_manager.event.from_user.id,
