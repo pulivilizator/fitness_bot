@@ -4,6 +4,7 @@ from sqlalchemy.orm import joinedload
 
 from .user import User, UserSettings, UserCalories
 from bot.src.data_stores.cache.cache_keys import CacheKeys
+from bot.src.utils.enums import Sex
 
 
 async def create_user(tg_id: int, session: AsyncSession, user_data: dict):
@@ -58,7 +59,8 @@ async def update_user_data(session: AsyncSession, user_id: int, user_data: dict)
         if key.startswith('user:'):
             user_key = key.split(':', 1)[1]
             if hasattr(user, user_key):
-                setattr(user, key, value)
+                print(user, user_key, value)
+                setattr(user, user_key, value)
         elif key.startswith('calories:'):
             calories_key = key.split(':', 1)[1]
             if hasattr(user.calories, calories_key):
@@ -67,5 +69,4 @@ async def update_user_data(session: AsyncSession, user_id: int, user_data: dict)
             settings_key = key.split(':', 1)[1]
             if hasattr(user.settings, settings_key):
                 setattr(user.settings, settings_key, value)
-
     await session.commit()
