@@ -19,3 +19,4 @@
 - docker
 - sqlalchemy
 - alembic
+- nats
