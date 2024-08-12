@@ -5,11 +5,11 @@ from bot.src.data_stores import CacheKeys
 
 def get_active_multiplier(active: str) -> float:
     match active:
-        case ActiveLevel.HIGH.value:
+        case ActiveLevel.HIGH:
             return 1.5
-        case ActiveLevel.MEDIUM.value:
+        case ActiveLevel.MEDIUM:
             return 1.3
-        case ActiveLevel.LOW.value:
+        case ActiveLevel.LOW:
             return 1.1
         case _:
             return 1
@@ -26,7 +26,7 @@ def counting_calories(user_data: dict, user_keys_id=False) -> Optional[int]:
         weight = int(user_data.get(CacheKeys.UserData.weight(key_to_id=user_keys_id)))
     except (TypeError, ValueError):
         return
-    if sex == Sex.MALE.value:
+    if sex == Sex.MALE:
         return int(((height * 5) - (age * 6.8) + (weight * 13.7) + 66) * multiplier)
-    elif sex == Sex.FEMALE.value:
+    elif sex == Sex.FEMALE:
         return int(((height * 1.8) - (age * 4.7) + (weight * 9.6) + 665) * multiplier)

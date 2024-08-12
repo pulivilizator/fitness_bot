@@ -31,7 +31,7 @@ async def get_sexes(dialog_manager: DialogManager,
         'change_data_sex_message': i18n.change.data.sex.message(),
         'sexes':
             (
-                (Sex.MALE.value, i18n.sex.man.button()), (Sex.FEMALE.value, i18n.sex.wooman.button())
+                (Sex.MALE, i18n.sex.man.button()), (Sex.FEMALE, i18n.sex.wooman.button())
             ),
     }
 
@@ -42,9 +42,9 @@ async def get_activities(dialog_manager: DialogManager,
     return {
         'change_data_activity_message': i18n.change.data.activity.message(),
         'activity_levels': (
-            (ActiveLevel.HIGH.value, i18n.activity.level.high()),
-            (ActiveLevel.MEDIUM.value, i18n.activity.level.medium()),
-            (ActiveLevel.LOW.value, i18n.activity.level.low()),
+            (ActiveLevel.HIGH, i18n.activity.level.high()),
+            (ActiveLevel.MEDIUM, i18n.activity.level.medium()),
+            (ActiveLevel.LOW, i18n.activity.level.low()),
         ),
     }
 

@@ -32,11 +32,11 @@ def get_user_data(i18n: TranslatorRunner, data: dict, user_keys_id=False) -> dic
 
 def activity_determining(activity: ActiveLevel, i18n: TranslatorRunner) -> str:
     match activity:
-        case ActiveLevel.HIGH.value:
+        case ActiveLevel.HIGH:
             return i18n.activity.level.high()
-        case ActiveLevel.MEDIUM.value:
+        case ActiveLevel.MEDIUM:
             return i18n.activity.level.medium()
-        case ActiveLevel.LOW.value:
+        case ActiveLevel.LOW:
             return i18n.activity.level.low()
         case _:
             return i18n.defautl.parameter()
@@ -44,18 +44,18 @@ def activity_determining(activity: ActiveLevel, i18n: TranslatorRunner) -> str:
 
 def sex_determining(sex: Sex, i18n: TranslatorRunner) -> str:
     match sex:
-        case Sex.MALE.value:
+        case Sex.MALE:
             return i18n.sex.man.button()
-        case Sex.FEMALE.value:
+        case Sex.FEMALE:
             return i18n.sex.wooman.button()
     return i18n.defautl.parameter()
 
 
 def lang_determining(lang: Language, i18n: TranslatorRunner) -> str:
     match lang:
-        case Language.RU.value:
+        case Language.RU:
             return i18n.lang.ru()
-        case Language.EN.value:
+        case Language.EN:
             return i18n.lang.en()
         case _:
             return i18n.defautl.parameter()

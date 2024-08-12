@@ -22,23 +22,23 @@ class CacheKeys:
     class UserData:
         @staticmethod
         def gender(key_to_id=False) -> str:
-            return KeysConverter('user_data', 'gender').__str__(id=key_to_id)
+            return KeysConverter('user', 'gender').__str__(id=key_to_id)
 
         @staticmethod
         def activity(key_to_id=False) -> str:
-            return KeysConverter('user_data', 'activity').__str__(id=key_to_id)
+            return KeysConverter('user', 'activity').__str__(id=key_to_id)
 
         @staticmethod
         def weight(key_to_id=False) -> str:
-            return KeysConverter('user_data', 'weight').__str__(id=key_to_id)
+            return KeysConverter('user', 'weight').__str__(id=key_to_id)
 
         @staticmethod
         def height(key_to_id=False) -> str:
-            return KeysConverter('user_data', 'height').__str__(id=key_to_id)
+            return KeysConverter('user', 'height').__str__(id=key_to_id)
 
         @staticmethod
         def age(key_to_id=False) -> str:
-            return KeysConverter('user_data', 'age').__str__(id=key_to_id)
+            return KeysConverter('user', 'age').__str__(id=key_to_id)
 
     class Calories:
         @staticmethod

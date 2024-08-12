@@ -6,6 +6,9 @@ from aiogram_dialog.widgets.kbd import ManagedRadio, Button
 
 from typing import TYPE_CHECKING
 
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from bot.src.data_stores.db.models.user.queries import create_user
 from bot.src.dialogs.user_dialogs.register_user.services import create_final_user_data
 from bot.src.services.timezone import update_dialog_data
 from bot.src.states import MainMenuSG
@@ -56,10 +59,13 @@ async def register_finish_handler(callback: CallbackQuery,
                                   dialog_manager: DialogManager):
     result_data: dict = dialog_manager.middleware_data.get('aiogd_context').widget_data
     cache: Cache = dialog_manager.middleware_data.get('cache')
-
+    session: AsyncSession = dialog_manager.middleware_data.get('session')
+    user_id = callback.from_user.id
     user_data = create_final_user_data(result_data=result_data, dialog_manager=dialog_manager)
-
-    await cache.set_data(user_id=callback.from_user.id, mapping_values=user_data)
+    await create_user(tg_id=user_id, session=session, user_data=user_data)
+    await cache.set_data(user_id=user_id, mapping_values=user_data)
 
     await dialog_manager.done()
     await dialog_manager.start(state=MainMenuSG.main_menu)
+
+

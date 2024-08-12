@@ -12,7 +12,7 @@ from bot.src.setters import SetButtonChecked
 
 from .handlers import (change_data_sex_handler, change_data_correct_age_handler, change_data_activity_handler,
                        change_data_correct_height_handler, change_data_correct_weight_handler,
-                       change_data_correct_calories_handler, update_calories_handler)
+                       change_data_correct_calories_handler, save_new_user_data_onclick, cancel_new_user_data_onclick)
 from .getters import (get_common_text, get_menu, get_sexes,
                       get_age, get_activities, get_height,
                       get_weight, get_calories)
@@ -39,8 +39,8 @@ change_data_dialog = Dialog(
                  state=ChangeDataSG.change_data_calories,
                  id='change_data_calories'),
 
-        Cancel(Format('{change_data_save_update_calories}')),
-        Cancel(Format('{previous_button}')),
+        Cancel(Format('{change_data_save_update_calories}'), on_click=save_new_user_data_onclick, id='save_data'),
+        Cancel(Format('{previous_button}'), on_click=cancel_new_user_data_onclick, id='cancel_data'),
         state=ChangeDataSG.change_data_menu,
         getter=get_menu
     ),
@@ -157,6 +157,5 @@ change_data_dialog = Dialog(
         CacheKeys.UserData.gender,
         CacheKeys.UserData.activity
     ),
-    getter=get_common_text,
-    on_close=update_calories_handler
+    getter=get_common_text
 )

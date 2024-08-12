@@ -16,9 +16,9 @@ if TYPE_CHECKING:
 async def get_active_levels(dialog_manager: DialogManager, i18n: TranslatorRunner, **kwargs) -> dict[str, tuple | str]:
     return {
         'activity_levels': (
-            (ActiveLevel.HIGH.value, i18n.activity.level.high()),
-            (ActiveLevel.MEDIUM.value, i18n.activity.level.medium()),
-            (ActiveLevel.LOW.value, i18n.activity.level.low()),
+            (ActiveLevel.HIGH, i18n.activity.level.high()),
+            (ActiveLevel.MEDIUM, i18n.activity.level.medium()),
+            (ActiveLevel.LOW, i18n.activity.level.low()),
         ),
         'activity_message': i18n.activity.message(),
     }
@@ -29,8 +29,8 @@ async def get_lang_and_hello(dialog_manager: DialogManager,
                              **kwargs) -> dict[str, tuple | str]:
     return {
         'languages': (
-            (Language.RU.value, i18n.lang.ru()),
-            (Language.EN.value, i18n.lang.en())
+            (Language.RU, i18n.lang.ru()),
+            (Language.EN, i18n.lang.en())
         ),
         'hello_message': i18n.hello.message(),
         'hello_register': i18n.hello.register()
@@ -48,7 +48,7 @@ async def get_geo(dialog_manager: DialogManager,
 async def get_sexes(dialog_manager: DialogManager, i18n: TranslatorRunner, **kwargs) -> dict[str, tuple | str]:
     return {'sexes':
         (
-            (Sex.MALE.value, i18n.sex.man.button()), (Sex.FEMALE.value, i18n.sex.wooman.button())
+            (Sex.MALE, i18n.sex.man.button()), (Sex.FEMALE, i18n.sex.wooman.button())
         ),
         'sex_message': i18n.sex.message(),
     }
@@ -76,7 +76,7 @@ async def get_register_finish(dialog_manager: DialogManager, i18n: TranslatorRun
     dialog_data = dialog_manager.middleware_data.get('aiogd_context').widget_data
     calories = counting_calories(dialog_data, user_keys_id=True)
     calories_exists = 1 if calories else 0
-    dialog_manager.dialog_data['max_calories'] = calories if calories else ''
+    dialog_manager.dialog_data['max_calories'] = calories or None
     dialog_manager.dialog_data['current_calories'] = '0'
     user_data = await asyncio.to_thread(get_user_data, i18n=i18n, data=dialog_data, user_keys_id=True)
     timezone = dialog_manager.dialog_data.get(CacheKeys.Settings.timezone(key_to_id=True)) or i18n.defautl.timezone()

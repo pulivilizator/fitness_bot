@@ -11,13 +11,13 @@ from redis.asyncio import Redis
 import asyncio
 import logging
 
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncEngine
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncEngine, async_sessionmaker
 
 from .config import get_config, Config
 from .src import get_routers
 from .storage import NatsStorage
 from .src.utils import connect_to_nats, create_translator_hub
-from .src.middlewares import TranslatorRunnerMiddleware, CacheMiddleware
+from .src.middlewares import TranslatorRunnerMiddleware, CacheMiddleware, DbSessionMiddleware
 from .src.menu import set_menu
 from .src.data_stores.cache import Cache
 
@@ -30,13 +30,10 @@ async def main():
     config = get_config()
 
     nc, js = await connect_to_nats(config.nats.servers)
-    engine = create_async_engine(
-        url=config.db.dsn
-    )
+
     dp = await create_dispatcher(config,
                                  nc=nc,
-                                 js=js,
-                                 engine=engine)
+                                 js=js)
 
     bot = Bot(
         token=config.tg_bot.token,
@@ -50,14 +47,20 @@ async def main():
 
 async def create_dispatcher(config: Config,
                             nc: NATSClient,
-                            js: JetStreamContext,
-                            engine: AsyncEngine) -> Dispatcher:
+                            js: JetStreamContext) -> Dispatcher:
     storage = await NatsStorage(nc=nc, js=js).create_storage()
     dp = Dispatcher(storage=storage)
 
+    engine = create_async_engine(
+        url=config.db.dsn
+    )
+    sessionmaker = async_sessionmaker(engine, expire_on_commit=False, autoflush=True)
+
     r = Redis(host=config.redis.host, port=config.redis.port)
     user_cache = Cache(r)
+
     hub = create_translator_hub()
+
     session = AiohttpSession()
 
     dp.workflow_data.update({'cache': user_cache,
@@ -67,6 +70,7 @@ async def create_dispatcher(config: Config,
 
     dp.include_routers(*get_routers())
     dp.startup.register(set_menu)
+    dp.update.outer_middleware(DbSessionMiddleware(sessionmaker))
     dp.update.middleware(CacheMiddleware())
     dp.update.middleware(TranslatorRunnerMiddleware())
 

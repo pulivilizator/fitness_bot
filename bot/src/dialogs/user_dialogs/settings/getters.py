@@ -14,8 +14,8 @@ async def get_langs(dialog_manager: DialogManager,
                     **kwargs) -> dict[str, tuple | str]:
     return {
         'languages': (
-            (Language.RU.value, i18n.lang.ru()),
-            (Language.EN.value, i18n.lang.en())
+            (Language.RU, i18n.lang.ru()),
+            (Language.EN, i18n.lang.en())
         ),
         'change_language_message': i18n.language.change.message()
     }
