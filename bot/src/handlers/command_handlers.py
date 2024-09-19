@@ -13,10 +13,7 @@ commands_router = Router()
 @commands_router.message(CommandStart())
 async def process_start(message: Message, dialog_manager: DialogManager, cache: Cache):
     status = await cache.get_value(user_id=message.from_user.id, key=CacheKeys.status())
-    print(status, UserStatus.NEW, type(status), type(UserStatus.NEW))
     if status == UserStatus.NEW:
-        print('NEW123131231312')
         await dialog_manager.start(state=UserRegisterSG.start, mode=StartMode.RESET_STACK)
     else:
-        print('OLD2313123123')
         await dialog_manager.start(state=MainMenuSG.main_menu, mode=StartMode.RESET_STACK)
